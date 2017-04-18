@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！-->
+    <title>易联众线下终端交易管理平台</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<div class="whole">
+    <div class="header">
+        <div class="titBox">
+            <h2 class="title">线下终端交易管理平台</h2>
+        </div>
+        <div class="userBox">
+            <a href="#" class="exitBtn">退出<i class="iconFont">&#xe66e;</i></a>
+            <span class="name"><i class="iconFont">&#xe604;</i>admin</span>
+        </div>
+    </div>
+
+    <div class="leftNav">
+        <ul class="list">
+            <li><a href="index.html" class="lineBtn"><i class="iconFont left">&#xe635;</i>主页</a></li>
+            <li class="active"><a href="agent.html" class="lineBtn"><i class="iconFont left">&#xe610;</i>代理商管理</a></li>
+            <li><a href="merchant.html" class="lineBtn"><i class="iconFont left">&#xe609;</i>商户管理</a></li>
+            <li>
+                <a href="javascript:;" class="lineBtn show"><i class="iconFont left">&#xe607;</i>终端管理<i
+                        class="iconFont right">&#xe60d;</i></a>
+                <div class="hiddenBox">
+                    <a href="terminal.html">终端型号管理</a>
+                    <a href="terminal-list.html">终端列表</a>
+                    <a href="terminal-into.html">终端入库</a>
+                    <a href="terminal-out.html">终端出库</a>
+                </div>
+            </li>
+            <li>
+                <a href="javascript:;" class="lineBtn show"><i class="iconFont left">&#xe66f;</i>交易管理<i
+                        class="iconFont right">&#xe60d;</i></a>
+                <div class="hiddenBox">
+                    <a href="channel.html">渠道配置</a>
+                    <a href="transaction.html">交易查询</a>
+                    <a href="transaction-into.html">交易导入</a>
+                </div>
+            </li>
+            <li>
+                <a href="javascript:;" class="lineBtn show"><i class="iconFont left">&#xe614;</i>分润管理<i
+                        class="iconFont right">&#xe60d;</i></a>
+                <div class="hiddenBox">
+                    <a href="profit-ylz.html">易联众分润</a>
+                    <a href="profit-agent.html">代理商分润</a>
+                </div>
+            </li>
+            <li>
+                <a href="javascript:;" class="lineBtn show"><i class="iconFont left">&#xe669;</i>报表管理<i
+                        class="iconFont right">&#xe60d;</i></a>
+                <div class="hiddenBox">
+                    <a href="report-terminal.html">终端交易报表</a>
+                    <a href="report-no.html">无交易终端报表</a>
+                </div>
+            </li>
+            <li>
+                <a href="user.html" class="lineBtn"><i class="iconFont left">&#xe722;</i>用户管理</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <div class="location">
+            <span class="text"><i class="iconFont">&#xe635;</i><a href="index.html">首页</a>&nbsp;&nbsp;>&nbsp;&nbsp;<a href="agent.html">代理商管理</a> - 新增</span>
+        </div>
+        <div class="content">
+            <div class="formBox">
+                <form class="form-horizontal">
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <div class="col-md-12 col-lg-6 form-group">
+                            <label class="col-md-2 col-lg-4 control-label">代理商编号</label>
+                            <div class="col-md-10 col-lg-8">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6 form-group">
+                            <label class="col-md-2 col-lg-4 control-label">代理商名称</label>
+                            <div class="col-md-10 col-lg-8">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <div class="col-md-12 col-lg-6 form-group">
+                            <label class="col-md-2 col-lg-4 control-label">法人</label>
+                            <div class="col-md-10 col-lg-8">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6 form-group">
+                            <label class="col-md-2 col-lg-4 control-label">联系人</label>
+                            <div class="col-md-10 col-lg-8">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <div class="col-md-12 col-lg-6 form-group">
+                            <label class="col-md-2 col-lg-4 control-label">身份证号</label>
+                            <div class="col-md-10 col-lg-8">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6 form-group">
+                            <label class="col-md-2 col-lg-4 control-label">联系电话</label>
+                            <div class="col-md-10 col-lg-8">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <div class="col-md-12 col-lg-6 form-group">
+                            <label class="col-md-2 col-lg-4 control-label">账户号</label>
+                            <div class="col-md-10 col-lg-8">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6 form-group">
+                            <label class="col-md-2 col-lg-4 control-label">账户名</label>
+                            <div class="col-md-10 col-lg-8">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <div class="col-md-12 col-lg-6 form-group">
+                            <label class="col-md-2 col-lg-4 control-label">联行号</label>
+                            <div class="col-md-10 col-lg-8">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6 form-group">
+                            <label class="col-md-2 col-lg-4 control-label">分润费率</label>
+                            <div class="col-md-10 col-lg-8">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <div class="col-md-12 col-lg-6 form-group">
+                            <div class="col-md-offset-2 col-md-10 col-lg-offset-4 col-lg-8">
+                                <button type="submit" class="btn btn-primary">提交</button>
+                                <a href="agent.html" class="btn btn-default">取消</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="js/jquery-2.1.1.min.js"></script>
+<script src="js/leftNav.js"></script>
+</body>
+</html>

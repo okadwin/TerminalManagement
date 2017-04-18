@@ -1,0 +1,159 @@
+html,body,div,span,a,ul,li,ol,p,form,input,label,select,button,textarea,img,h1,h2,h3,h4,h5,h6,i,table,td,tr,th,video,object,canvas,i{ padding: 0; margin: 0; box-sizing: border-box; outline:none;}
+div,a,p,li,span,label,select,input,button,textarea,h1,h2,h3,h4,h5,h6,tr,td,th,i{ font-family: "微软雅黑"; color: #333}
+a,a:hover,a:link,a:active,p,span,h1,h2,h3,h4,h5,h6,i,td,th,tr,label{ text-decoration: none;}
+img,input,button{ border: none;}
+ul,ol,li{ list-style: none;}
+body{ background: #f1f4f7;}
+html,body{ width: 100%; height: 100%; overflow: hidden; min-width: 1000px; overflow-x: auto}
+table tr td, table tr th{white-space:nowrap;}
+.bgFFF{ background: #FFF}
+
+@font-face {
+    font-family: 'iconfont';
+    src: url('../fonts/iconfont.eot');
+    src: url('../fonts/iconfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/iconfont.woff') format('woff'),
+    url('../fonts/iconfont.ttf') format('truetype'),
+    url('../fonts/iconfont.svg#iconfont') format('svg');
+}
+
+.iconFont{
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/**框架**/
+.whole{ position: absolute; width: 100%; min-width: 1000px; height: 100%; top: 0; left: 0; padding-left: 220px; padding-top: 120px}
+.leftNav{ position: absolute; left: 0; top: 0; width: 220px; height: 100%; background: #444e58; z-index: 9; padding-top: 60px; overflow: auto}
+.leftNav .list{ width: 100%; height: auto; overflow: hidden}
+.leftNav .list li{ width: 100%; height: auto; overflow: hidden}
+.leftNav .list .lineBtn{ display: block; width: 100%; height: 60px; line-height: 60px; font-size: 14px; color: #FFF; padding-left: 20px; border-bottom: #5a6774 solid 1px}
+.leftNav .list .lineBtn i.left{ float: left; font-size: 20px; line-height: 60px; color: #FFF; margin-right: 16px}
+.leftNav .list .lineBtn i.right{ float: right; font-size: 20px; line-height: 60px; color: #FFF; margin-right: 16px}
+
+.leftNav .list .lineBtn:hover,.leftNav .list li.active .lineBtn{ color: #428bca}
+.leftNav .list .lineBtn:hover i,.leftNav .list li.active .lineBtn i{ color: #428bca}
+.leftNav .list li.active .lineBtn i.right{ display: none}
+
+.leftNav .list li.active .lineBtn.show{ background: #FFF; border-right: #444e58 solid 8px; color: #444e58}
+.leftNav .list li.active .lineBtn.show i{ color: #444e58}
+
+.leftNav .list .hiddenBox{ width: 100%; height: auto; overflow: hidden; border-bottom: #5a6774 solid 1px; padding: 14px 0; display: none;}
+.leftNav .list li.active .hiddenBox{ display: block}
+.leftNav .list .hiddenBox a{ display: block; width: 100%; height: 40px; font-size: 14px; line-height: 40px; padding-left: 56px; color: #FFF}
+.leftNav .list .hiddenBox a:hover,.leftNav .list .hiddenBox a.active{ color: #428bca}
+.leftNav::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}.leftNav::-webkit-scrollbar-thumb {
+    background-color: rgba(169, 169, 169, 1);
+    outline-offset: -2px;
+    -webkit-border-radius: 3px;
+}.leftNav::-webkit-scrollbar-track-piece {
+    -webkit-border-radius: 3px;
+}
+
+.header{ position: absolute; left: 0; top: 0; width: 100%; height: 60px; z-index: 10; background: #323940; padding-left: 220px}
+.header .titBox{ position:absolute; left:0; top: 0; width: auto; height: 60px;}
+.header .titBox .title{ font-size: 20px; line-height: 60px; color: #FFF; padding-left: 20px;}
+.header .userBox{ width: 100%; height: 60px;}
+.header .userBox .exitBtn{ float: right; margin-right: 20px; line-height: 60px; font-size: 14px; color: #FFF;}
+.header .userBox .exitBtn i{ font-size: 24px; display: block; line-height: 65px; float: right; color: #FFF; margin-left: 8px}
+.header .userBox .name{ float: right; line-height: 60px; color: #FFF; margin-right: 60px; font-size: 14px;}
+.header .userBox .name i{ float: left; font-size: 16px; line-height: 60px; color: #FFF; margin-right: 8px; display: block}
+
+.main{ position: absolute; width: 100%; height: 100%; top: 0; left: 0; overflow: auto; padding-left: 220px; padding-top: 60px; z-index: 8}
+.main .location{ width: 100%; height: 60px; background: #5a6774; padding: 0 20px}
+.main .location .text{ font-size: 14px; line-height: 60px; color: #FFF;}
+.main .location .text i{ float: left; font-size: 20px; line-height: 60px; color: #FFF; margin-right: 12px}
+.main .location .text a{ font-size: 14px; line-height: 60px; color: #FFF}
+.main .location .text a:hover{ text-decoration: underline}
+.main .content{ width: 100%; height: auto; overflow: hidden; padding: 20px}
+.main .topBox{ width: 100%; height: auto; overflow: hidden; padding: 30px 20px 15px; background: #FFF}
+
+.proList{ width: 100%; height: auto; overflow: hidden; margin-top: 20px; padding: 20px; background: #FFF}
+.table{ background: #FFF; margin-bottom: 0;}
+.table td,.table th{ padding: 10px 14px !important;}
+.table th{ font-weight: bold}
+.table td a{ color: #428bca; font-size: 14px}
+.table td a:hover{ text-decoration: underline}
+.table td a.no{ color: #999}
+.table td a.no:hover{ text-decoration: none; cursor: default}
+.pagination{ margin: 20px 0 0 !important}
+
+/**登录**/
+.loginBg{ position: fixed; z-index: 0; top: 0; left: 0; width: 100%; height: 100%;
+    background-image: -ms-linear-gradient(top, #618fee 0%, #6858FB 100%);
+    /* Mozilla Firefox */
+    background-image: -moz-linear-gradient(top, #618fee 0%, #6858FB 100%);
+    /* Opera */
+    background-image: -o-linear-gradient(top, #618fee 0%, #6858FB 100%);
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #618fee), color-stop(100, #6858FB));
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-linear-gradient(top, #618fee 0%, #6858FB 100%);
+    /* W3C Markup */
+    background-image: linear-gradient(to bottom, #618fee 0%, #6858FB 100%);}
+.ppr-paddingBM { padding-bottom: 20px; }
+.ppr-loginContainer{ width:300px; border-radius: 5px; height:512px; position:fixed; margin-top:-256px; margin-left:-150px; top:50%; left:50%; }
+.ppr-backgroundTransparent{ background-color:transparent; }
+.ppr-loginInput{ height: 42px; border-radius: 4px; border: 1px solid white; text-align: left; font-size: 14px; color: #000F30; }
+.ppr-loginInput::-webkit-input-placeholder{ color: #FFF}
+.ppr-loginInput:focus{ border-color:white; box-shadow: inset 0 3px 3px rgba(0,0,0,.075), 0 0 10px rgba(255, 255, 255, .6); }
+.ppr-loginAlert{ border:1px solid #b21b59; background-color: white; color: #b21b59; border-radius: 4px; }
+#ngProgress{ color:#b21b59 !important; background-color:#b21b59 !important; }
+.ppr-inputLabel { color: #6e78b7; margin-bottom: 14px; }
+.ppr-textS { font-size: 16px; }
+.ppr-textWhite { color: #fff!important; }
+.text-left { text-align: left; }
+.ppr-marginBL { margin-bottom: 40px; position: relative}
+.ppr-marginBL .code{ position: absolute; bottom: 0; right: 0; height: 42px; width: auto;}
+.ppr-btnSelect { width: 100%; border: 1px solid transparent; padding: 12px 40px; background-color: #8cc63f; color: #fff; border-radius: 4px; box-shadow: 0 1px 1px #5f852a; outline: none!important; }
+.ppr-textL { font-size: 16px; }
+.ppr-textT{ font-size: 28px; text-shadow: 0 2px 2px rgba(0,0,0,.075), 0 0 3px rgba(255, 255, 255, .6);}
+
+/**表单**/
+.formBox{ width: 100%; height: auto; overflow: hidden; padding: 60px 0 30px; background: #FFF}
+.uploadImg{ float: left; width: 64px; height: 64px; border: #eaeaea solid 1px; margin-right: 20px}
+.form-group{ margin-bottom: 30px}
+.edit{ width: 100%;}
+@media (min-width: 768px) {
+    .pr16{ padding-right: 16.66666666%}
+}
+
+/**搜索**/
+.search .form-group{ position: relative; padding-left: 120px; margin-bottom: 15px}
+.search .control-label{ position: absolute; left: 0; top: 0; display: block; width: 120px; text-align: right; font-weight: 400;padding-top: 7px;}
+
+.indShow{ padding: 20px 5px 0}
+.indShow,.indShow ul{ width: 100%; height: auto; overflow: hidden;}
+.indShow .contentBox{ width: 100%; height: auto; overflow: hidden; background: #f1f4f7; border-radius: 8px;}
+.indShow li{ height: 80px; position: relative; margin-bottom: 20px; overflow: hidden}
+.indShow .iconFont{ display: block; height: 80px; text-align: center; line-height: 80px; color: #FFF; font-size: 48px; padding: 0}
+.indShow .iconFont.red{ background: #8ad919;}
+.indShow .iconFont.blue{ background: #30a5ff;}
+.indShow .iconFont.green{ background: #1ebfae;}
+.indShow .iconFont.yellow{ background: #ffb53e;}
+.indShow .iconFont.else{ line-height: 88px}
+.indShow .num{ display: block; font-size: 28px; line-height: 28px; color: #5f6468; margin-top: 14px; margin-bottom: 10px; overflow: hidden}
+.indShow .name{ display: block; font-size: 14px; line-height: 14px; color: #9fadbb;}
+
+
+
+.chartBox{ width: 100%; height: auto; overflow: hidden; padding: 0 10px 20px;}
+.chartBox .line{ float: left; width: 50%; padding: 10px}
+.chartBox .line .name{ display: block; width: 100%; padding-bottom: 15px; font-size: 16px; line-height: 18px; color: #333; font-weight: bold; padding-left: 20px;}
+
+.form-horizontal .control-label{ padding-bottom: 7px}
+
+
+.textBox{ width: 100%; height: auto; overflow: hidden; background: #FFF; margin-bottom: 20px; padding: 20px 0}
+.textBox .text{ display: block; width: 100%; text-align: center; font-size: 24px; color: #666; line-height: 48px}
+.textBox .text span{ color: #428bca; font-weight: bold;}
+.textBox .text.else{ text-align: left }
+.pb0{ padding-bottom: 0 !important}
+.pt4{ padding-top: 4px !important}
+.userText{ display: block; font-size: 14px; line-height: 34px; height: 34px; color: #333; font-weight: bold; margin-bottom: 10px}

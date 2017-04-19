@@ -68,9 +68,14 @@ class TerminalController extends Controller
 
 
     public function TerminalIn(){
+        $number=Terminal::where('InTime','>',strtotime(date('Y-m-d', time())))
+            ->get([
+            DB::raw('COUNT(*) as value')
+            ]);
+        //print_r($number);
         $types=TerminalType::all();
         $terminals=Terminal::paginate();
-        return view('Terminal.TerminalIn',['types'=>$types,'terminals'=>$terminals]);
+        return view('Terminal.TerminalIn',['types'=>$types,'terminals'=>$terminals,'number'=>$number]);
     }
 
     public function TerminalAdd(Request $request){
@@ -90,6 +95,10 @@ class TerminalController extends Controller
     }
 
     public function TerminalInSelect(Request $request){
+        $number=Terminal::where('InTime','>',strtotime(date('Y-m-d', time())))
+            ->get([
+                DB::raw('COUNT(*) as value')
+            ]);
         $wtf=0;
         $types=TerminalType::all();
         $Manufacture=$request->input('Manufacture');
@@ -147,7 +156,7 @@ class TerminalController extends Controller
         }
 
         //todo:只根据厂家名称查询时的分页问题
-        return view('Terminal.TerminalIn',['terminals'=>$terminals,'types'=>$types,'wtf'=>$wtf]);
+        return view('Terminal.TerminalIn',['terminals'=>$terminals,'number'=>$number,'types'=>$types,'wtf'=>$wtf]);
     }
 
     public function TerminalInEdit($id){
@@ -166,10 +175,15 @@ class TerminalController extends Controller
     }
 
     public function TerminalOut(){
+        $number=Terminal::where('OutTime','>',strtotime(date('Y-m-d', time())))
+            ->get([
+                DB::raw('COUNT(*) as value')
+            ]);
+
         $types=TerminalType::all();
         $channels=Channel::all();
         $terminals=Terminal::where('OutTime','!=',null)->paginate();
-        return view('Terminal.TerminalOut',['channels'=>$channels,'terminals'=>$terminals,'types'=>$types]);
+        return view('Terminal.TerminalOut',['channels'=>$channels,'terminals'=>$terminals,'types'=>$types,'number'=>$number]);
     }
 
     public function TerminalOutAdd(Request $request){
@@ -206,6 +220,10 @@ class TerminalController extends Controller
     }
 
     public function TerminalOutSelect(Request $request){
+        $number=Terminal::where('OutTime','>',strtotime(date('Y-m-d', time())))
+            ->get([
+                DB::raw('COUNT(*) as value')
+            ]);
         $wtf=0;
         $types=TerminalType::all();
         $channels=Channel::all();
@@ -270,16 +288,30 @@ class TerminalController extends Controller
             return view('ErrorAlert', ['err_info' => '无查询结果！']);
         }
         //todo:只根据厂家名称查询时的分页问题
-        return view('Terminal.TerminalOut',['terminals'=>$terminals,'channels'=>$channels,'types'=>$types,'wtf'=>$wtf]);
+        return view('Terminal.TerminalOut',['terminals'=>$terminals,'channels'=>$channels,'types'=>$types,'wtf'=>$wtf,'number'=>$number]);
     }
 
     public function TerminalList(){
+        $all=Terminal::first([DB::raw('COUNT(*) as value')]);
+        $all=$all->value;
+        $in=Terminal::where('OutTime',null)->first([DB::raw('COUNT(*) as value')]);
+        $in=$in->value;
+        $out=Terminal::where('OutTime','>',0)->first([DB::raw('COUNT(*) as value')]);
+        $out=$out->value;
+        $number=array('all'=>$all,'in'=>$in,'out'=>$out);
         $types=TerminalType::all();
         $terminals=Terminal::paginate();
-        return view('Terminal.TerminalList',['terminals'=>$terminals,'types'=>$types]);
+        return view('Terminal.TerminalList',['terminals'=>$terminals,'types'=>$types,'number'=>$number]);
     }
 
     public function TerminalListSelect(Request $request){
+        $all=Terminal::first([DB::raw('COUNT(*) as value')]);
+        $all=$all->value;
+        $in=Terminal::where('OutTime',null)->first([DB::raw('COUNT(*) as value')]);
+        $in=$in->value;
+        $out=Terminal::where('OutTime','>',0)->first([DB::raw('COUNT(*) as value')]);
+        $out=$out->value;
+        $number=array('all'=>$all,'in'=>$in,'out'=>$out);
         $wtf=0;
         $types=TerminalType::all();
         $channels=Channel::all();
@@ -340,7 +372,7 @@ class TerminalController extends Controller
         }
 
         //todo:只根据厂家名称查询时的分页问题
-        return view('Terminal.TerminalList',['terminals'=>$terminals,'channels'=>$channels,'types'=>$types,'wtf'=>$wtf]);
+        return view('Terminal.TerminalList',['terminals'=>$terminals,'channels'=>$channels,'types'=>$types,'number'=>$number,'wtf'=>$wtf]);
 
     }
 }

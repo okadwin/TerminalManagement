@@ -77,13 +77,12 @@ Route::group(['middleware' => ['User','Permission']], function () {
     Route::post('ReportTerminal','ReportController@Terminal');
     Route::get('ReportZero','ReportController@Zero');
     Route::post('ReportZero','ReportController@Zero');
+
+    Route::get('/','IndexController@Index');
 });
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::get('API','TerminalController@API');
 Route::get('User/Login','UserController@LoginView');
 Route::get('User/Logout','UserController@Logout');

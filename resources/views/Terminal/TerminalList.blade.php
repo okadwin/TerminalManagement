@@ -12,13 +12,13 @@
             <div class="textBox">
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     <div class="col-sm-4 col-md-4 col-lg-4">
-                        <span class="text">终端设备总数量：<span>8888</span></span>
+                        <span class="text">终端设备总数量：<span>{{$number['all']}}</span></span>
                     </div>
                     <div class="col-sm-4 col-md-4 col-lg-4">
-                        <span class="text">库存终端总数量：<span>8888</span></span>
+                        <span class="text">库存终端总数量：<span>{{$number['in']}}</span></span>
                     </div>
                     <div class="col-sm-4 col-md-4 col-lg-4">
-                        <span class="text">出库终端总数量：<span>8888</span></span>
+                        <span class="text">出库终端总数量：<span>{{$number['out']}}</span></span>
                     </div>
                 </div>
             </div>

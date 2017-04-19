@@ -12,7 +12,7 @@
             <div class="textBox">
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     <div class="col-sm-6 col-md-6 col-lg-6">
-                        <span class="text else">当日入库终端数量：<span>8888</span></span>
+                        <span class="text else">当日入库终端数量：<span>@foreach($number as $n) {{$n->value}} @endforeach</span></span>
                     </div>
                 </div>
             </div>

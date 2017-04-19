@@ -50,7 +50,7 @@ class ProfitController extends Controller
 //            print_r($ts);
             foreach ($ts as $t){
                 //cho $t->Fee * ((100 - @$t->Shop->Agent->Profit) / 100)."\n";
-                $num[$day->date]+=$t->Fee * ((100 - @$t->Shop->Agent->Profit) / 100);
+                $num[$day->date]+=$t->Fee * 0.75 * ((100 - @$t->Shop->Agent->Profit) / 100);
             }
         }
         //print_r($num);

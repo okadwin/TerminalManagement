@@ -40,18 +40,19 @@ class ShopController extends Controller
         $ShopTimeStop=$request->input('ShopTimeStop');
         $ShopStatus=$request->input('ShopStatus');
 //todo:翻页方式是GET，翻页后可能无法带有查询条件，可以改成GET传递查询条件即可
+        $where=array();
         if ($ShopNumber){$where[] = array('ShopNumber','=',$ShopNumber);}
         if ($ShopName){$where[] = array('ShopName','like','%'.$ShopName.'%');}
         if ($ShopAgent){$where[] = array('ShopAgent','=',$ShopAgent);}
         if ($ShopTimeStart){$ShopTimeStart=strtotime($ShopTimeStart);$where[] = array('ShopJoinTime','>',$ShopTimeStart);}
         if ($ShopTimeStop){$ShopTimeStop=strtotime($ShopTimeStop);$where[] = array('ShopJoinTime','<',$ShopTimeStop);}
         if ($ShopStatus/*||$ShopStatus===0*/!==''){$where[] = array('ShopStatus','=',$ShopStatus);}
-        if (@!$where){
-//            return view('ErrorAlert', ['err_info' => '请输入查询条件！']);
-            $shops=Shop::paginate();
-        }else{
+//        if (@!$where){
+////            return view('ErrorAlert', ['err_info' => '请输入查询条件！']);
+//            $shops=Shop::paginate();
+//        }else{
             $shops=Shop::where($where)->paginate();
-        }
+//        }
         $agents=Agent::all();
 //        print_r($shops);exit;
         if ($request->has('button') && $request->get('button')=='export'){
@@ -71,6 +72,7 @@ class ShopController extends Controller
                     }
                     $sheet->fromArray($array);
                     $sheet->setAutoSize(true);
+                    $sheet->setAutoFilter();
                 });
             })->export('xlsx');
         }

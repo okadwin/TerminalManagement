@@ -19,12 +19,14 @@ class ReportController extends Controller
         }else{
             $terminals=Terminal::where('OutTime','>',0)->get();
         }
+        //print_r($terminals);
         $r=array();
         foreach ($terminals as $terminal){
             $number=0;
             $amount=0;
             $profitY=0;//易联众分润
             $profitA=0;//代理商分润
+            $where=array();//初始化条件
             if ($request->input('start')){
                 $where[]=['TransactionTime','>',strtotime($request->input('start'))];
             }
@@ -34,16 +36,18 @@ class ReportController extends Controller
             $where[]=['TerminalNumber',$terminal->TerminalNumber];
 //            print_r($where);exit;
             $transactions=Transaction::where($where)->get();
-            if (!count($transactions)){
-                continue;
-            }
+//            if (!count($transactions)){
+            //                continue;
+            //            }
             foreach ($transactions as $transaction){
                 $number+=1;
                 $amount+=$transaction->TransactionAmount;
                 $profitY+=$transaction->Fee * 0.75 * ((100 - $transaction->Shop->Agent->Profit)/100);
                 $profitA+=$transaction->Fee * 0.75 * ($transaction->Shop->Agent->Profit/100);
             }
-            if ($request->input('low')){
+            //print_r($request->input('low'));
+            if ($request->input('low')==1){
+                //echo '11111111111111';
                 if (!(($profitY < $terminal->TerminalType->Price) && ($terminal->OutType ==1 ))){
                     continue;//免投，并且易联众分润低于售价
                 }
@@ -73,6 +77,7 @@ class ReportController extends Controller
                     }
                     $sheet->fromArray($array);
                     $sheet->setAutoSize(true);
+                    $sheet->setAutoFilter();
                 });
             })->export('xlsx');
         }
@@ -144,6 +149,7 @@ class ReportController extends Controller
                     }
                     $sheet->fromArray($array);
                     $sheet->setAutoSize(true);
+                    $sheet->setAutoFilter();
                 });
             })->export('xlsx');
         }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Terminal;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
@@ -29,12 +30,23 @@ class TransactionController extends Controller
             $savePath = $saveDir.$newName.'.'.$file->getClientOriginalExtension();
             Storage::put($savePath, file_get_contents($file->getRealPath()));
             $res =array();
-            Excel::load(storage_path('app\\'.$savePath), function($reader) use (&$res) {
+            Excel::load('storage/app/'.$savePath, function($reader) use (&$res) {
                 $reader = $reader->getSheet(0);
                 $res = $reader->toArray();
                 //print_r($res);
             });
             unset($res[0]);
+            $terminals=Terminal::where('OutTime','>',0)->get();
+
+            foreach ($terminals as $terminal) {
+                $terminalNumber[]=$terminal->TerminalNumber;
+            }
+            foreach ($res as $item){
+                if (!in_array($item[3],$terminalNumber)){
+                    return view('ErrorAlert', ['err_info' => '错误！表格中存在非法的终端编号，请检查后重新上传！']);
+                }
+            }
+
             foreach ($res as $item){
                 $transaction                   = new Transaction();
 //                $transaction->Channel          = $request->input('channel');
@@ -167,6 +179,7 @@ class TransactionController extends Controller
                     }
                     $sheet->fromArray($array);
                     $sheet->setAutoSize(true);
+                    $sheet->setAutoFilter();
                 });
             })->export('xlsx');
         }

@@ -54,7 +54,6 @@ class ProfitController extends Controller
             }
         }
         //print_r($num);
-
         if ($request->has('button') && $request->get('button')=='export'){
             Excel::create('ProfitYlz', function ($excel) use ($r,$num) {
                 $excel->sheet('ProfitYlz', function ($sheet) use ($r,$num){
@@ -68,6 +67,7 @@ class ProfitController extends Controller
                     }
                     $sheet->fromArray($array);
                     $sheet->setAutoSize(true);
+                    $sheet->setAutoFilter();
                 });
             })->export('xlsx');
         }
@@ -78,7 +78,7 @@ class ProfitController extends Controller
         $paginate->setPath(Paginator::resolveCurrentPath());
         $page = empty($request->get('page'))? 1 : $request->get('page');
         $r = $r->sortByDesc('id')->forPage($page,$perPage);
-        return view('Profit.Ylz',['r'=>$r,'profit'=>$num,'paginate'=>$paginate]);
+        return view('Profit.Ylz',['r'=>$r,'profit'=>@$num,'paginate'=>$paginate]);
     }
 
 
@@ -159,6 +159,7 @@ class ProfitController extends Controller
                     }
                     $sheet->fromArray($array);
                     $sheet->setAutoSize(true);
+                    $sheet->setAutoFilter();
                 });
             })->export('xlsx');
         }

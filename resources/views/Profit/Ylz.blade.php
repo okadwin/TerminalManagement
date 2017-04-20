@@ -13,7 +13,7 @@
                 <form class="form-horizontal col-sm-10 col-md-10 col-lg-8 search" action="{{action('ProfitController@Ylz')}}" method="post">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">清算日期</label>
+                        <label class="col-sm-2 control-label">交易日期</label>
                         <div class="col-sm-5">
                             <input type="text" class="form-control datetimepicker" name="start">
                         </div>
@@ -34,7 +34,7 @@
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered">
                         <tr>
-                            <th>清算日期</th>
+                            <th>交易日期</th>
                             <th>总交易笔数</th>
                             <th>总交易金额</th>
                             <th>总分润金额</th>

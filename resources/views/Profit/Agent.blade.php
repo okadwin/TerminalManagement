@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">清算日期</label>
+                        <label class="col-sm-2 control-label">交易日期</label>
                         <div class="col-sm-5">
                             <input type="text" class="form-control datetimepicker" name="start">
                         </div>
@@ -40,7 +40,7 @@
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered">
                         <tr>
-                            <th>清算日期</th>
+                            <th>交易日期</th>
                             <th>代理商名称</th>
                             <th>总交易笔数</th>
                             <th>总交易金额</th>

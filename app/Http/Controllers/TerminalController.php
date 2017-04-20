@@ -47,11 +47,12 @@ class TerminalController extends Controller
     }
 
     public function TypeSelect(Request $request){
+        $where=array();
         $Manufacture=$request->input('Manufacture');
         $type=$request->input('Type');
         if ($Manufacture){$where[]=array('Manufacture','like','%'.$Manufacture.'%');}
         if ($type){$where[]=array('Type',$type);}
-        if (@!$where){return view('ErrorAlert', ['err_info' => '请输入查询条件！']);}
+        //if (@!$where){return view('ErrorAlert', ['err_info' => '请输入查询条件！']);}
         $types=TerminalType::where($where)->paginate();
         return view('Terminal.Type',['types'=>$types]);
     }
@@ -75,7 +76,7 @@ class TerminalController extends Controller
         //print_r($number);
         $types=TerminalType::all();
         $terminals=Terminal::paginate();
-        return view('Terminal.TerminalIn',['types'=>$types,'terminals'=>$terminals,'number'=>$number]);
+        return view('Terminal.TerminalIn',['types'=>$types,'terminals'=>$terminals,'number'=>$number,'wtf'=>0]);
     }
 
     public function TerminalAdd(Request $request){
@@ -151,6 +152,7 @@ class TerminalController extends Controller
                     }
                     $sheet->fromArray($array);
                     $sheet->setAutoSize(true);
+                    $sheet->setAutoFilter();
                 });
             })->export('xlsx');
         }
@@ -162,7 +164,7 @@ class TerminalController extends Controller
     public function TerminalInEdit($id){
         $terminal=Terminal::find($id);
         $types=TerminalType::all();
-        return view('Terminal.TerminalInEdit',['terminal'=>$terminal,'types'=>$types]);
+        return view('Terminal.TerminalInEdit',['terminal'=>$terminal,'types'=>$types,'wtf'=>0]);
     }
 
     public function TerminalInUpdate(Request $request,$id){
@@ -183,7 +185,7 @@ class TerminalController extends Controller
         $types=TerminalType::all();
         $channels=Channel::all();
         $terminals=Terminal::where('OutTime','!=',null)->paginate();
-        return view('Terminal.TerminalOut',['channels'=>$channels,'terminals'=>$terminals,'types'=>$types,'number'=>$number]);
+        return view('Terminal.TerminalOut',['channels'=>$channels,'terminals'=>$terminals,'types'=>$types,'number'=>$number,'wtf'=>0]);
     }
 
     public function TerminalOutAdd(Request $request){
@@ -206,7 +208,7 @@ class TerminalController extends Controller
         $terminal=Terminal::find($id);
 //        $types=TerminalType::all();
         $channels=Channel::all();
-        return view('Terminal.TerminalOutEdit',['terminal'=>$terminal,'channels'=>$channels]);
+        return view('Terminal.TerminalOutEdit',['terminal'=>$terminal,'channels'=>$channels,'wtf'=>0]);
     }
 
     public function TerminalOutUpdate(Request $request,$id){
@@ -278,6 +280,7 @@ class TerminalController extends Controller
                     }
                     $sheet->fromArray($array);
                     $sheet->setAutoSize(true);
+                    $sheet->setAutoFilter();
                 });
             })->export('xlsx');
         }
@@ -301,7 +304,7 @@ class TerminalController extends Controller
         $number=array('all'=>$all,'in'=>$in,'out'=>$out);
         $types=TerminalType::all();
         $terminals=Terminal::paginate();
-        return view('Terminal.TerminalList',['terminals'=>$terminals,'types'=>$types,'number'=>$number]);
+        return view('Terminal.TerminalList',['terminals'=>$terminals,'types'=>$types,'number'=>$number,'wtf'=>0]);
     }
 
     public function TerminalListSelect(Request $request){
@@ -367,6 +370,7 @@ class TerminalController extends Controller
                     }
                     $sheet->fromArray($array);
                     $sheet->setAutoSize(true);
+                    $sheet->setAutoFilter();
                 });
             })->export('xlsx');
         }

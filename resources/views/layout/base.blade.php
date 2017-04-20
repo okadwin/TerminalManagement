@@ -73,7 +73,7 @@ function toa($action){
                             class="iconFont right">&#xe60d;</i></a>
                 <div class="hiddenBox">
                     <a href="{{action('ReportController@Terminal')}}" @if(toa('ReportTerminal')) class="active" @endif>终端交易报表</a>
-                    <a href="{{action('ReportController@Zero')}}" @if(toa('ReportTerminal')) class="active" @endif>无交易终端报表</a>
+                    <a href="{{action('ReportController@Zero')}}" @if(toa('ReportZero')) class="active" @endif>无交易终端报表</a>
                 </div>
             </li>
             <li>

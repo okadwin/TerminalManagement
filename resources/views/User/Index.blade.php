@@ -45,7 +45,7 @@
                         <td>{{$user->UserInfo->phone}}</td>
                         <td>{{$user->UserInfo->email}}</td>
                         <td>{{$user->created_at}}</td>
-                        <td><a href="{{action('UserController@Edit',['id'=>$user->id])}}">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{action('UserController@Delete',['id'=>$user->id])}}">删除</a></td>
+                        <td><a href="{{action('UserController@Edit',['id'=>$user->id])}}">编辑</a><!--&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{action('UserController@Delete',['id'=>$user->id])}}">删除</a>--></td>
                     </tr>
                     @endforeach
                 </table>

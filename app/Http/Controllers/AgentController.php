@@ -32,12 +32,12 @@ class AgentController extends Controller {
 //                        }
                         $array[]=[
                             '代理商编号'=>$item['id'],
-                            '代理商名称'=>$item['AgentNumber'],
+                            '代理商名称'=>$item['AgentName'],
                             '法人'=>$item['Person'],
                             '联系人'=>$item['cPerson'],
                             '联系电话'=>$item['cPhone'],
                             '身份证号'=>$item['IDcard'],
-                            '账户号'=>$item['BankAccountNumber'],
+                            '账户号'=>$item['BankAccountNum'],
                             '账户名'=>$item['BankAccountName'],
                             '开户行'=>$item['BankName'],
                             '联行号'=>$item['BankNum'],
@@ -46,6 +46,7 @@ class AgentController extends Controller {
                     }
                     $sheet->fromArray($array);
                     $sheet->setAutoSize(true);
+                    $sheet->setAutoFilter();
                 });
             })->export('xlsx');
         }

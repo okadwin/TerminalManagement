@@ -87,7 +87,7 @@
                 <div class="col-md-12 col-lg-6 form-group">
                     <label class="col-md-2 col-lg-4 control-label">分润率(%)</label>
                     <div class="col-md-10 col-lg-8">
-                        <input type="number" class="form-control" name="Profit" required>
+                        <input type="text" class="form-control" name="Profit" required>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-12 col-lg-12">

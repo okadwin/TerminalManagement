@@ -9,19 +9,19 @@
     </div>
     <div class="content">
         <div class="formBox">
-            <form class="form-horizontal" action="{{isset($channel) ? action('ChannelController@Update',['id'=>$channel->id]) : action('ChannelController@Add')}}" method="post">
+            <form class="form-horizontal" action="{{isset($channel) ? action('ChannelController@Update',['id'=>$channel->id]) : action('ChannelController@Add')}}" method="post" id="commentForm">
                 {{ csrf_field() }}
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">渠道名称</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="Name" value="{{isset($channel->Name) ? $channel->Name : ''}}">
+                            <input type="text" class="form-control" name="Name" value="{{isset($channel->Name) ? $channel->Name : ''}}" required>
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">联系人</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="Contact" value="{{isset($channel->Contact) ? $channel->Contact : ''}}">
+                            <input type="text" class="form-control" name="Contact" value="{{isset($channel->Contact) ? $channel->Contact : ''}}" required>
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">联系电话</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="ContactPhone" value="{{isset($channel->ContactPhone) ? $channel->ContactPhone : ''}}">
+                            <input type="text" class="form-control" name="ContactPhone" value="{{isset($channel->ContactPhone) ? $channel->ContactPhone : ''}}" required>
                         </div>
                     </div>
                 </div>
@@ -48,4 +48,10 @@
     </div>
 </div>
 
+
+<script>
+    $().ready(function() {
+        $("#commentForm").validate();
+    });
+</script>
 @endsection

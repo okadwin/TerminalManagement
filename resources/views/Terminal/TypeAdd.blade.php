@@ -9,19 +9,19 @@
     </div>
     <div class="content">
         <div class="formBox">
-            <form class="form-horizontal" action="{{isset($type) ? action('TerminalController@TypeUpdate',['id'=>$type->id]) : action('TerminalController@TypeAdd')}}" method="post">
+            <form class="form-horizontal" action="{{isset($type) ? action('TerminalController@TypeUpdate',['id'=>$type->id]) : action('TerminalController@TypeAdd')}}" method="post" id="commentForm">
                 {{ csrf_field() }}
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">终端厂商名称</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="Manufacture" value="{{isset($type->Manufacture) ? $type->Manufacture : ''}}">
+                            <input type="text" class="form-control" name="Manufacture" value="{{isset($type->Manufacture) ? $type->Manufacture : ''}}" required>
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">终端设备型号</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="Type" value="{{isset($type->Type) ? $type->Type : ''}}">
+                            <input type="text" class="form-control" name="Type" value="{{isset($type->Type) ? $type->Type : ''}}" required>
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">终端设备售价</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="Price" value="{{isset($type->Price) ? $type->Price : ''}}">
+                            <input type="text" class="form-control" name="Price" value="{{isset($type->Price) ? $type->Price : ''}}" required>
                         </div>
                     </div>
                 </div>
@@ -48,4 +48,9 @@
     </div>
 </div>
 
+<script>
+    $().ready(function() {
+        $("#commentForm").validate();
+    });
+</script>
 @endsection

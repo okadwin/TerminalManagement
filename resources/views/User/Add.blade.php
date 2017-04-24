@@ -9,19 +9,19 @@
     </div>
     <div class="content">
         <div class="formBox">
-            <form class="form-horizontal" action="{{isset($user) ? action('UserController@Update',['id'=>$user->id]) : action('UserController@Add')}}" method="post">
+            <form class="form-horizontal" action="{{isset($user) ? action('UserController@Update',['id'=>$user->id]) : action('UserController@Add')}}" method="post" id="commentForm">
                 {{ csrf_field() }}
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">用户名</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="username" value="{{isset($user->email) ? $user->email : ''}}" @if(isset($user)) readonly="readonly" @endif>
+                            <input type="text" class="form-control" name="username" value="{{isset($user->email) ? $user->email : ''}}" @if(isset($user)) readonly="readonly" @endif required>
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">密码</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="password" class="form-control" name="password" value="">
+                            <input type="password" class="form-control" name="password" value="" required>
                         </div>
                     </div>
                 </div>
@@ -30,13 +30,13 @@
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">联系人</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="name" value="{{isset($user->UserInfo->name) ? $user->UserInfo->name : ''}}">
+                            <input type="text" class="form-control" name="name" value="{{isset($user->UserInfo->name) ? $user->UserInfo->name : ''}}" required>
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">联系电话</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="phone" value="{{isset($user->UserInfo->phone) ? $user->UserInfo->phone : ''}}">
+                            <input type="text" class="form-control" name="phone" value="{{isset($user->UserInfo->phone) ? $user->UserInfo->phone : ''}}" required>
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">邮箱</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="email" value="{{isset($user->UserInfo->email) ? $user->UserInfo->email : ''}}">
+                            <input type="text" class="form-control" name="email" value="{{isset($user->UserInfo->email) ? $user->UserInfo->email : ''}}" required>
                         </div>
                     </div>
                 </div>
@@ -212,4 +212,11 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $().ready(function() {
+        $("#commentForm").validate();
+    });
+</script>
 @endsection

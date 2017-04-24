@@ -119,7 +119,7 @@
                                 aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">终端列表 - 出库</h4>
                 </div>
-                <form class="form-horizontal" action="{{action('TerminalController@TerminalOutAdd')}}" method="post">
+                <form class="form-horizontal" action="{{action('TerminalController@TerminalOutAdd')}}" method="post" id="commentForm">
                     {{ csrf_field() }}
                     <div class="modal-body pb0">
 
@@ -141,25 +141,25 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label" style="color: darkred">终端S/N码</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="SN">
+                                <input type="text" class="form-control" name="SN" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">商户号</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="ShopNumber">
+                                <input type="text" class="form-control" name="ShopNumber" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label" style="color: darkred">终端号 </label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="TerminalNumber">
+                                <input type="text" class="form-control" name="TerminalNumber" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">渠道</label>
                             <div class="col-sm-9">
-                                <select class="form-control" name="Channel">
+                                <select class="form-control" name="Channel" required>
                                     @foreach($channels as $channel)
                                     <option value="{{$channel->id}}">{{$channel->Name}}</option>
                                     @endforeach
@@ -169,7 +169,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">出库类型</label>
                             <div class="col-sm-9">
-                                <select class="form-control" name="OutType">
+                                <select class="form-control" name="OutType" required>
                                     <option value="1">免投</option>
                                     <option value="2">自购</option>
                                 </select>
@@ -221,5 +221,10 @@
             })
 
         })
+    </script>
+    <script>
+        $().ready(function() {
+            $("#commentForm").validate();
+        });
     </script>
 @endsection

@@ -18,7 +18,7 @@
             </div>
 
             <div class="topBox">
-                <form class="form-horizontal col-sm-10 col-md-10 col-lg-8 search" method="post" action="{{action('TerminalController@TerminalOutSelect')}}">
+                <form class="form-horizontal col-sm-10 col-md-10 col-lg-8 search" method="post" action="{{action('TerminalController@TerminalOut')}}">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label class="col-sm-2 control-label">终端厂商名称</label>
@@ -103,7 +103,7 @@
                 </div>
 
                 <nav aria-label="Page navigation">
-                    @if(@!$wtf){{$terminals->links()}}@endif
+                    {{$paginate->links()}}
                 </nav>
             </div>
         </div>

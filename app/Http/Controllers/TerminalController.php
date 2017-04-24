@@ -155,6 +155,8 @@ class TerminalController extends Controller
             })->export('xlsx');
         }
 
+
+
 //        print_r($terminals);exit;
 //        $terminals->appends($request->all());
         //todo:只根据厂家名称查询时的分页问题
@@ -184,7 +186,7 @@ class TerminalController extends Controller
         return response()->json(['msg'=>'入库成功！']);
     }
 
-    public function TerminalInSelect(Request $request){
+    /*public function TerminalInSelect(Request $request){
         $number=Terminal::where('InTime','>',strtotime(date('Y-m-d', time())))
             ->get([
                 DB::raw('COUNT(*) as value')
@@ -246,9 +248,9 @@ class TerminalController extends Controller
             })->export('xlsx');
         }
 
-        //todo:只根据厂家名称查询时的分页问题
+
         return view('Terminal.TerminalIn',['terminals'=>$terminals,'number'=>$number,'types'=>$types,'wtf'=>$wtf]);
-    }
+    }*/
 
     public function TerminalInEdit($id){
         $terminal=Terminal::find($id);
@@ -265,7 +267,7 @@ class TerminalController extends Controller
         return view('ErrorAlert', ['err_info' => '修改成功！']);
     }
 
-    public function TerminalOut(){
+    public function TerminalOut(Request $request){
         $number=Terminal::where('OutTime','>',strtotime(date('Y-m-d', time())))
             ->get([
                 DB::raw('COUNT(*) as value')
@@ -273,8 +275,81 @@ class TerminalController extends Controller
 
         $types=TerminalType::all();
         $channels=Channel::all();
-        $terminals=Terminal::where('OutTime','!=',null)->paginate();
-        return view('Terminal.TerminalOut',['channels'=>$channels,'terminals'=>$terminals,'types'=>$types,'number'=>$number,'wtf'=>0]);
+        $terminals=Terminal::where('OutTime','!=',null)->get();
+//
+//
+//
+//        $number=Terminal::where('OutTime','>',strtotime(date('Y-m-d', time())))
+//            ->get([
+//                DB::raw('COUNT(*) as value')
+//            ]);
+//        $wtf=0;
+//        $types=TerminalType::all();
+//        $channels=Channel::all();
+        $Manufacture=$request->input('Manufacture');
+        $type=$request->input('type');
+        $sn=trim($request->input('SN'));
+        $StartTime=$request->input('OutStartTime');
+        $StopTime=$request->input('OutStopTime');
+        if ($type){$where[] = array('Type','=',$type);}
+        if ($sn){$where[] = array('SN','=',$sn);}
+        if ($StartTime){$where[] = array('OutTime','>',strtotime($StartTime));}
+        if ($StopTime){$where[] = array('OutTime','<',strtotime($StopTime) + 86400);}
+        //        if (@!$where && !$Manufacture){
+        //            return view('ErrorAlert', ['err_info' => '请至少输入一个查询条件！']);
+        //        }
+
+        $where[]=array('OutTime','>',0);
+        $terminals=Terminal::where($where)->get();
+
+        if ($Manufacture && !$type){
+            $types=TerminalType::where('Manufacture','like','%'.$Manufacture.'%')->get();
+            foreach ($types as $type){
+                $terminals=$terminals->filter(function ($item)use ($type){
+                    if ($item->Type == $type->id){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                });
+            }
+        }
+
+
+        if ($request->has('button') && $request->get('button')=='export'){
+            Excel::create('TerminalOut', function ($excel) use ($terminals) {
+                $excel->sheet('Agents', function ($sheet) use ($terminals){
+                    foreach ($terminals as $item) {
+                        //                        print_r($item);
+                        $array[]=[
+                            '终端厂商名称'=>$item->TerminalType->Manufacture,
+                            '终端设备型号'=>$item->TerminalType->Type,
+                            '终端SN码'=>$item->SN,
+                            '商户号'=>$item->ShopNumber,
+                            '终端号'=>$item->TerminalNumber,
+                            '渠道名称'=>$item->ChannelName->Name,
+                            '出库类型'=>$item->OutTypeName,
+                            '库存地点'=>$item->Location,
+                            '出库时间'=>date('Y-m-d H:i:s',$item->OutTime),
+                            '出库人员'=>$item->User->UserInfo->name,
+                            //fixme:此处的调用，出库的时候也调用的是入库，尤其注意调用出库操作人员的时候
+                        ];
+                    }
+                    $sheet->fromArray($array);
+                    $sheet->setAutoSize(true);
+                    $sheet->setAutoFilter();
+                });
+            })->export('xlsx');
+        }
+
+        $perPage = 15;
+        $paginate = new LengthAwarePaginator($terminals,$terminals->count(),$perPage);
+        $paginate->setPath(Paginator::resolveCurrentPath());
+        $paginate->appends($request->all());
+        $page = empty($request->get('page'))? 1 : $request->get('page');
+        $terminals = $terminals->sortByDesc('id')->forPage($page,$perPage);
+        return view('Terminal.TerminalOut',['terminals'=>$terminals,'channels'=>$channels,'types'=>$types,'paginate'=>$paginate,'number'=>$number]);
+
     }
 
     public function TerminalOutAdd(Request $request){
@@ -310,80 +385,9 @@ class TerminalController extends Controller
         return view('ErrorAlert', ['err_info' => '修改成功！']);
     }
 
-    public function TerminalOutSelect(Request $request){
-        $number=Terminal::where('OutTime','>',strtotime(date('Y-m-d', time())))
-            ->get([
-                DB::raw('COUNT(*) as value')
-            ]);
-        $wtf=0;
-        $types=TerminalType::all();
-        $channels=Channel::all();
-        $Manufacture=$request->input('Manufacture');
-        $type=$request->input('type');
-        $sn=trim($request->input('SN'));
-        $StartTime=$request->input('OutStartTime');
-        $StopTime=$request->input('OutStopTime');
-        if ($type){$where[] = array('Type','=',$type);}
-        if ($sn){$where[] = array('SN','=',$sn);}
-        if ($StartTime){$where[] = array('OutTime','>',strtotime($StartTime));}
-        if ($StopTime){$where[] = array('OutTime','<',strtotime($StopTime) + 86400);}
-//        if (@!$where && !$Manufacture){
-//            return view('ErrorAlert', ['err_info' => '请至少输入一个查询条件！']);
-//        }
-        if (@$where){
-            $where[]=array('OutTime','>',0);
-            $terminals=Terminal::where($where)->paginate();
-        }else{
-            $terminals=Terminal::where('OutTime','>',0)->paginate();
-        }
-        if ($Manufacture){
-            foreach ($terminals as $terminal){
-                if ($terminal->TerminalType->Manufacture != $Manufacture){
-                    continue;
-                }
-                $ts[]=$terminal;
-            }
-            @$terminals=$ts;
-            $wtf=1;
-        }
 
 
-        if ($request->has('button') && $request->get('button')=='export'){
-            Excel::create('TerminalOut', function ($excel) use ($terminals) {
-                $excel->sheet('Agents', function ($sheet) use ($terminals){
-                    foreach ($terminals as $item) {
-                        //                        print_r($item);
-                        $array[]=[
-                            '终端厂商名称'=>$item->TerminalType->Manufacture,
-                            '终端设备型号'=>$item->TerminalType->Type,
-                            '终端SN码'=>$item->SN,
-                            '商户号'=>$item->ShopNumber,
-                            '终端号'=>$item->TerminalNumber,
-                            '渠道名称'=>$item->ChannelName->Name,
-                            '出库类型'=>$item->OutTypeName,
-                            '库存地点'=>$item->Location,
-                            '出库时间'=>date('Y-m-d H:i:s',$item->OutTime),
-                            '出库人员'=>$item->User->UserInfo->name,
-                            //fixme:此处的调用，出库的时候也调用的是入库，尤其注意调用出库操作人员的时候
-                        ];
-                    }
-                    $sheet->fromArray($array);
-                    $sheet->setAutoSize(true);
-                    $sheet->setAutoFilter();
-                });
-            })->export('xlsx');
-        }
-
-
-
-        if (@!$terminals){
-            return view('ErrorAlert', ['err_info' => '无查询结果！']);
-        }
-        //todo:只根据厂家名称查询时的分页问题
-        return view('Terminal.TerminalOut',['terminals'=>$terminals,'channels'=>$channels,'types'=>$types,'wtf'=>$wtf,'number'=>$number]);
-    }
-
-    public function TerminalList(){
+    public function TerminalList(Request $request){
         $all=Terminal::first([DB::raw('COUNT(*) as value')]);
         $all=$all->value;
         $in=Terminal::where('OutTime',null)->first([DB::raw('COUNT(*) as value')]);
@@ -391,20 +395,17 @@ class TerminalController extends Controller
         $out=Terminal::where('OutTime','>',0)->first([DB::raw('COUNT(*) as value')]);
         $out=$out->value;
         $number=array('all'=>$all,'in'=>$in,'out'=>$out);
-        $types=TerminalType::all();
-        $terminals=Terminal::paginate();
-        return view('Terminal.TerminalList',['terminals'=>$terminals,'types'=>$types,'number'=>$number,'wtf'=>0]);
-    }
-
-    public function TerminalListSelect(Request $request){
-        $all=Terminal::first([DB::raw('COUNT(*) as value')]);
-        $all=$all->value;
-        $in=Terminal::where('OutTime',null)->first([DB::raw('COUNT(*) as value')]);
-        $in=$in->value;
-        $out=Terminal::where('OutTime','>',0)->first([DB::raw('COUNT(*) as value')]);
-        $out=$out->value;
-        $number=array('all'=>$all,'in'=>$in,'out'=>$out);
-        $wtf=0;
+//        $types=TerminalType::all();
+//        $terminals=Terminal::paginate();
+//        $all=Terminal::first([DB::raw('COUNT(*) as value')]);
+//        $all=$all->value;
+//        $in=Terminal::where('OutTime',null)->first([DB::raw('COUNT(*) as value')]);
+//        $in=$in->value;
+//        $out=Terminal::where('OutTime','>',0)->first([DB::raw('COUNT(*) as value')]);
+//        $out=$out->value;
+//        $number=array('all'=>$all,'in'=>$in,'out'=>$out);
+//        $wtf=0;
+        $where=array();
         $types=TerminalType::all();
         $channels=Channel::all();
         $Manufacture=$request->input('Manufacture');
@@ -417,32 +418,34 @@ class TerminalController extends Controller
                 $where[]=array('OutTime','>',0);
             }
             if ($request->input('Status')==1){
-//                echo '111';
+                //                echo '111';
                 $where[]=array('OutTime','=',null);
             }
         }
-//        print_r($where);
-//        if (@!$where && !$Manufacture){
-//            return view('ErrorAlert', ['err_info' => '请至少输入一个查询条件！']);
-//        }
+        //        print_r($where);
+        //        if (@!$where && !$Manufacture){
+        //            return view('ErrorAlert', ['err_info' => '请至少输入一个查询条件！']);
+        //        }
         if (@$where){
-            $terminals=Terminal::where($where)->paginate();
+            $terminals=Terminal::where($where)->get();
         }else{
-            $terminals=Terminal::paginate();
+            $terminals=Terminal::all();
         }
-        if ($Manufacture){
-            foreach ($terminals as $terminal){
-                if ($terminal->TerminalType->Manufacture != $Manufacture){
-                    continue;
-                }
-                $ts[]=$terminal;
+        if ($Manufacture && !$type){
+            $types=TerminalType::where('Manufacture','like','%'.$Manufacture.'%')->get();
+            foreach ($types as $type){
+                $terminals=$terminals->filter(function ($item)use ($type){
+                    if ($item->Type == $type->id){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                });
             }
-            @$terminals=$ts;
-            $wtf=1;
         }
-//        if (@!$terminals){
-//            return view('ErrorAlert', ['err_info' => '无查询结果！']);
-//        }
+        //        if (@!$terminals){
+        //            return view('ErrorAlert', ['err_info' => '无查询结果！']);
+        //        }
 
         if ($request->has('button') && $request->get('button')=='export'){
             Excel::create('TerminalList', function ($excel) use ($terminals) {
@@ -464,8 +467,13 @@ class TerminalController extends Controller
             })->export('xlsx');
         }
 
-        //todo:只根据厂家名称查询时的分页问题
-        return view('Terminal.TerminalList',['terminals'=>$terminals,'channels'=>$channels,'types'=>$types,'number'=>$number,'wtf'=>$wtf]);
-
+        $perPage = 15;
+        $paginate = new LengthAwarePaginator($terminals,$terminals->count(),$perPage);
+        $paginate->setPath(Paginator::resolveCurrentPath());
+        $paginate->appends($request->all());
+        $page = empty($request->get('page'))? 1 : $request->get('page');
+        $terminals = $terminals->sortByDesc('id')->forPage($page,$perPage);
+        return view('Terminal.TerminalList',['terminals'=>$terminals,'channels'=>$channels,'types'=>$types,'number'=>$number,'paginate'=>$paginate]);
     }
+
 }

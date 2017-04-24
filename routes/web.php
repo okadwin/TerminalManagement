@@ -39,13 +39,13 @@ Route::group(['middleware' => ['User','Permission']], function () {
     Route::any('TerminalIn','TerminalController@TerminalIn');
     Route::get('TerminalInEdit/{id}','TerminalController@TerminalInEdit');
     Route::post('TerminalInUpdate/{id}','TerminalController@TerminalInUpdate');
-    Route::get('TerminalOut','TerminalController@TerminalOut');
-    Route::post('TerminalOut','TerminalController@TerminalOutSelect');
+    Route::any('TerminalOut','TerminalController@TerminalOut');
+    //Route::post('TerminalOut','TerminalController@TerminalOutSelect');
     Route::post('TerminalOutAdd','TerminalController@TerminalOutAdd');
     Route::get('TerminalOutEdit/{id}','TerminalController@TerminalOutEdit');
     Route::post('TerminalOutUpdate/{id}','TerminalController@TerminalOutUpdate');
-    Route::get('TerminalList','TerminalController@TerminalList');
-    Route::post('TerminalList','TerminalController@TerminalListSelect');
+    Route::any('TerminalList','TerminalController@TerminalList');
+    //Route::post('TerminalList','TerminalController@TerminalListSelect');
 
     Route::get('ChannelAdd','ChannelController@AddView');
     Route::post('ChannelAdd','ChannelController@Add');

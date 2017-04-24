@@ -11,12 +11,12 @@
     </div>
     <div class="content">
         <div class="topBox">
-            <form class="form-horizontal col-sm-10 col-md-10 col-lg-8 search">
+            <form class="form-horizontal col-sm-10 col-md-10 col-lg-8 search" action="{{action('ChannelController@Select')}}" method="post">
                 {{ csrf_field() }}
                 <div class="form-group">
                     <label class="col-sm-2 control-label">渠道名称</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="Name">
+                        <input type="text" class="form-control" name="Name" value="{{request()->input('Name')}}">
                     </div>
                 </div>
                 <div class="form-group">

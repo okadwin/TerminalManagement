@@ -26,7 +26,7 @@
                             <select class="form-control" id="manufacturers" name="Manufacture">
                                 <option value="">全部</option>
                                 @foreach($types as $type)
-                                    <option value="{{$type->Manufacture}}">{{$type->Manufacture}}</option>
+                                    <option value="{{$type->Manufacture}}" @if(!empty(request()->input('Manufacture'))) @if(request()->input('Manufacture')==$type->Manufacture) selected="selected" @endif @endif>{{$type->Manufacture}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -36,31 +36,31 @@
                         <div class="col-sm-10">
                             <select class="form-control" id="equipment" name="type">
                                 <option value="">全部</option>
-                                {{--@foreach($types as $type)--}}
-                                    {{--<option value="{{$type->id}}">{{$type->Type}}</option>--}}
-                                {{--@endforeach--}}
+                                @foreach($types as $type)
+                                    @if(!empty(request()->input('type'))) @if(request()->input('type')==$type->id)<option value="{{$type->id}}" selected="selected">{{$type->Type}}</option>@endif @endif
+                                @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">终端S/N码</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="snCode" name="sn">
+                            <input type="text" class="form-control" id="snCode" name="sn" value="{{request()->input('sn')}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">库存地点</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="address" name="location">
+                            <input type="text" class="form-control" id="address" name="location" value="{{request()->input('location')}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">入库时间</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control datetimepicker" name="InTimeStart">
+                            <input type="text" class="form-control datetimepicker" name="InTimeStart" value="{{request()->input('InTimeStart')}}">
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control datetimepicker" name="InTimeStop">
+                            <input type="text" class="form-control datetimepicker" name="InTimeStop" value="{{request()->input('InTimeStop')}}">
                         </div>
                     </div>
                     <div class="form-group">

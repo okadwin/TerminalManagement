@@ -81,16 +81,18 @@ class TransactionController extends Controller
 
     public function TransactionList(Request $request){
         $agents=Agent::all();
-        $transactions=Transaction::all();//todo 首页的时候记得改成分页形式
-        $ShopNumber=$request->input('ShopNumber') ? $request->input('ShopNumber') : '';
-        $ShopName=$request->input('ShopName') ? $request->input('ShopName') : '';
+        $transactions=Transaction::all();
+        $ShopNumber=$request->input('ShopNumber') ? trim($request->input('ShopNumber')) : '';
+        $ShopName=$request->input('ShopName') ? trim($request->input('ShopName')) : '';
         $Agent=$request->input('Agent') ? $request->input('Agent') : '';
         $TimeStart=$request->input('TimeStart') ? $request->input('TimeStart') : '';
         $TimeStop=$request->input('TimeStop') ? $request->input('TimeStop') : '';
-        $TerminalNumber=$request->input('TerminalNumber') ? $request->input('TerminalNumber') : '';
+        $TerminalNumber=$request->input('TerminalNumber') ? trim($request->input('TerminalNumber')) : '';
+
 
         if ($ShopName){
             $shops=Shop::where('ShopName','like','%'.$ShopName.'%')->get();
+            //print_r($shops);
             foreach ($shops as $shop){
                 $transactions=$transactions->filter(function ($item)use ($shop){
                     if ($item->ShopNumber == $shop->ShopNumber){
@@ -99,6 +101,9 @@ class TransactionController extends Controller
                         return false;
                     }
                 });
+            }
+            if (!count($shops)){
+                $transactions=collect(array());
             }
         }
         if ($Agent){
@@ -111,6 +116,9 @@ class TransactionController extends Controller
                         return false;
                     }
                 });
+            }
+            if (!count($shops)){
+                $transactions=collect(array());
             }
         }
 
@@ -135,7 +143,7 @@ class TransactionController extends Controller
         }
         if ($TimeStop){
             $transactions=$transactions->filter(function ($item) use ($TimeStop){
-                if ($item->TransactionTime<strtotime($TimeStop)){
+                if ($item->TransactionTime<strtotime($TimeStop) +86400){
                     return true;
                 }else{
                     return false;
@@ -174,7 +182,7 @@ class TransactionController extends Controller
                             '交易时间'=>$time,
                             '交易类型'=>$item->TransactionName,
                             '清算类型'=>$item->SettleName,
-                            '易联众分润'=>$item->Fee * ((100 - @$item->Shop->Agent->Profit) / 100),
+                            '易联众分润'=>$item->Fee * 0.75 * ((100 - @$item->Shop->Agent->Profit) / 100),
                         ];
                     }
                     $sheet->fromArray($array);
@@ -187,6 +195,7 @@ class TransactionController extends Controller
         $perPage = 15;
         $paginate = new LengthAwarePaginator($transactions,$transactions->count(),$perPage);
         $paginate->setPath(Paginator::resolveCurrentPath());
+        $paginate->appends($request->all());
         $page = empty($request->get('page'))? 1 : $request->get('page');
         $transactions = $transactions->sortByDesc('id')->forPage($page,$perPage);
         return view('Transaction.Index',['agents'=>$agents,'transactions'=>$transactions,'paginate'=>$paginate]);

@@ -5,7 +5,7 @@
 @section('main')
 <div class="main">
     <div class="location">
-        <span class="text"><i class="iconFont">&#xe635;</i><a href="/">首页</a>&nbsp;&nbsp;>&nbsp;&nbsp;<a href="{{action('TerminalController@Type')}}">终端型号管理</a> - 新增</span>
+        <span class="text"><i class="iconFont">&#xe635;</i><a href="/">首页</a>&nbsp;&nbsp;>&nbsp;&nbsp;<a href="{{action('TerminalController@Type')}}">终端型号管理</a></span>
     </div>
     <div class="content">
         <div class="formBox">

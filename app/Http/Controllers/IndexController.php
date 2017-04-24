@@ -25,7 +25,7 @@ class IndexController extends Controller
         $numbert=0;
         $amountt=0;
         foreach ($transactions as $transaction){
-            $profitt+=$transaction->Fee * 0.75 * (100 - ($transaction->Shop->Agent->Profit - 100) / 100);
+            $profitt+=$transaction->Fee * 0.75 * ((100 - $transaction->Shop->Agent->Profit ) / 100);
             $amountt+=$transaction->TransactionAmount;
             $numbert+=1;
         }
@@ -50,11 +50,12 @@ class IndexController extends Controller
         );
 
         for ($days=0;$days<7;$days++){
-            $day=strtotime(date('Y-m-d', time()))-86400*7;
+            $day=strtotime(date('Y-m-d', time()))-86400*5;
             $value=DB::table('shops')
-                ->select(DB::raw('COUNT(*) as value'))
+                ->select(DB::raw('COUNT(id) as value'))
                 ->where('ShopJoinTime','<',$day + $days * 86400)
                 ->first();
+            //print_r($day + $days);
             $shops[$days]=$value->value;
         }
         foreach ($shops as $item => $value){
@@ -65,7 +66,7 @@ class IndexController extends Controller
         }
 
         for ($days=0;$days<7;$days++){
-            $day=strtotime(date('Y-m-d', time()))-86400*7;
+            $day=strtotime(date('Y-m-d', time()))-86400*5;
             $value=DB::table('transactions')
                 ->select(DB::raw('COUNT(*) as value'))
                 ->where('TransactionTime','<',$day + $days * 86400)
@@ -79,7 +80,7 @@ class IndexController extends Controller
             $numbers[$item]=(int)$value;
         }
         for ($days=0;$days<7;$days++){
-            $day=strtotime(date('Y-m-d', time()))-86400*7;
+            $day=strtotime(date('Y-m-d', time()))-86400*5;
             $value=DB::table('transactions')
                 ->select(DB::raw('SUM(TransactionAmount) as value'))
                 ->where('TransactionTime','<',$day + $days * 86400)
@@ -95,7 +96,7 @@ class IndexController extends Controller
 
         //////////////////////////////////
         for ($days=0;$days<7;$days++){
-            $day=strtotime(date('Y-m-d', time()))-86400*7;
+            $day=strtotime(date('Y-m-d', time()))-86400*6;
             $value=DB::table('shops')
                 ->select(DB::raw('COUNT(*) as value'))
                 ->where([['ShopJoinTime','>',$day + $days * 86400],['ShopJoinTime','<',$day + $days * 86400 + 86400]])
@@ -110,7 +111,7 @@ class IndexController extends Controller
         }
 
         for ($days=0;$days<7;$days++){
-            $day=strtotime(date('Y-m-d', time()))-86400*7;
+            $day=strtotime(date('Y-m-d', time()))-86400*6;
             $value=DB::table('transactions')
                 ->select(DB::raw('COUNT(*) as value'))
                 ->where([['TransactionTime','>',$day + $days * 86400],['TransactionTime','<',$day + $days * 86400 + 86400]])
@@ -124,7 +125,7 @@ class IndexController extends Controller
             $numberd[$item]=(int)$value;
         }
         for ($days=0;$days<7;$days++){
-            $day=strtotime(date('Y-m-d', time()))-86400*7;
+            $day=strtotime(date('Y-m-d', time()))-86400*6;
             $value=DB::table('transactions')
                 ->select(DB::raw('SUM(TransactionAmount) as value'))
                 ->where([['TransactionTime','>',$day + $days * 86400],['TransactionTime','<',$day + $days * 86400 + 86400]])
@@ -137,6 +138,7 @@ class IndexController extends Controller
             }
             $amountd[$item]=(int)$value;
         }
-        return view('Index',['head'=>$head,'shops'=>$shops,'numbers'=>$numbers,'amounts'=>$amounts,'shopd'=>$shopd,'numberd'=>$numberd,'amountd'=>$amountd]);
+        $day=['y'=>(int)date('Y',time()-86400*7),'m'=>(int)date('m',time()-86400*7)-1,'d'=>(int)date('d',time()-86400*7)];
+        return view('Index',['head'=>$head,'shops'=>$shops,'numbers'=>$numbers,'amounts'=>$amounts,'shopd'=>$shopd,'numberd'=>$numberd,'amountd'=>$amountd,'day'=>$day]);
     }
 }

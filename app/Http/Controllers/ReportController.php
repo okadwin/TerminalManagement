@@ -15,7 +15,7 @@ class ReportController extends Controller
     //
     public function Terminal(Request $request){
         if ($request->input('TerminalNumber')){
-            $terminals=Terminal::where('TerminalNumber',$request->input('TerminalNumber'))->get();
+            $terminals=Terminal::where('TerminalNumber',trim($request->input('TerminalNumber')))->get();
         }else{
             $terminals=Terminal::where('OutTime','>',0)->get();
         }
@@ -61,18 +61,18 @@ class ReportController extends Controller
                 'ProfitA'               =>$profitA
             ];
         }
-
+        //print_r($r);
         if ($request->has('button') && $request->get('button')=='export'){
             Excel::create('ReportTerminal', function ($excel) use ($r) {
                 $excel->sheet('ReportTerminal', function ($sheet) use ($r){
                     foreach ($r as $item) {
                         $array[]=[
-                            '终端号'=>$item['TerminalNumber'],
-                            '商户号'=>$item['ShopNumber'],
-                            '总交易笔数'=>$item['Number'],
-                            '总交易金额'=>$item['Amount'],
-                            '易联众分润金额'=>$item['ProfitY'],
-                            '代理商分润金额'=>$item['ProfitA'],
+                            '终端号'=>(string)$item['TerminalNumber'],
+                            '商户号'=>(string)$item['ShopNumber'],
+                            '总交易笔数'=>(string)$item['Number'],
+                            '总交易金额'=>(string)$item['Amount'],
+                            '易联众分润金额'=>(string)$item['ProfitY'],
+                            '代理商分润金额'=>(string)$item['ProfitA'],
                         ];
                     }
                     $sheet->fromArray($array);
@@ -90,6 +90,7 @@ class ReportController extends Controller
         $perPage = 15;
         $paginate = new LengthAwarePaginator($r,$r->count(),$perPage);
         $paginate->setPath(Paginator::resolveCurrentPath());
+        $paginate->appends($request->all());
         $page = empty($request->get('page'))? 1 : $request->get('page');
         $r = $r->sortByDesc('id')->forPage($page,$perPage);
         return view('Report.Terminal',['r'=>$r,'paginate'=>$paginate]);
@@ -98,7 +99,7 @@ class ReportController extends Controller
 
     public function Zero(Request $request){
         if ($request->input('TerminalNumber')){
-            $where[]=['TerminalNumber',$request->input('TerminalNumber')];
+            $where[]=['TerminalNumber',trim($request->input('TerminalNumber'))];
         }
         if ($request->input('start')){
             $where[]=['OutTime','>',strtotime($request->input('start'))];
@@ -141,10 +142,10 @@ class ReportController extends Controller
                             '终端号'=>$item['TerminalNumber'],
                             '商户号'=>$item['ShopNumber'],
                             '出库日期'=>$item['OutTime'],
-                            '总交易笔数'=>0,
-                            '总交易金额'=>0,
-                            '易联众分润金额'=>0,
-                            '代理商分润金额'=>0,
+                            '总交易笔数'=>'0',
+                            '总交易金额'=>'0',
+                            '易联众分润金额'=>'0',
+                            '代理商分润金额'=>'0',
                         ];
                     }
                     $sheet->fromArray($array);
@@ -160,6 +161,7 @@ class ReportController extends Controller
         $perPage = 15;
         $paginate = new LengthAwarePaginator($r,$r->count(),$perPage);
         $paginate->setPath(Paginator::resolveCurrentPath());
+        $paginate->appends($request->all());
         $page = empty($request->get('page'))? 1 : $request->get('page');
         $r = $r->sortByDesc('id')->forPage($page,$perPage);
         return view('Report.Zero',['r'=>$r,'paginate'=>$paginate]);

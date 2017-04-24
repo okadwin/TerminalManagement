@@ -15,16 +15,16 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">代理商名称</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="agent">
+                            <input type="text" class="form-control" name="agent" value="{{request()->input('agent')}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">交易日期</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control datetimepicker" name="start">
+                            <input type="text" class="form-control datetimepicker" name="start" value="{{request()->input('start')}}">
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control datetimepicker" name="stop">
+                            <input type="text" class="form-control datetimepicker" name="stop" value="{{request()->input('stop')}}">
                         </div>
                     </div>
                     <div class="form-group">

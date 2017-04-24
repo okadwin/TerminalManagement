@@ -14,13 +14,13 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">终端厂商名称</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="Manufacture">
+                        <input type="text" class="form-control" name="Manufacture" value="{{request()->input('Manufacture')}}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">终端设备型号</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="Type">
+                        <input type="text" class="form-control" name="Type" value="{{request()->input('Type')}}">
                     </div>
                 </div>
                 <div class="form-group">

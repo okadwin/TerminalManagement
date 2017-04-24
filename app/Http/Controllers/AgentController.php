@@ -19,7 +19,7 @@ class AgentController extends Controller {
 
     public function AgentSelect(Request $request) {
         //todo:翻页方式是GET，翻页后可能无法带有查询条件，可以改成GET传递查询条件即可
-        $AgentName=$request->input('AgentName');
+        $AgentName=trim($request->input('AgentName'));
         $agents = Agent::where('AgentName','like','%'.$AgentName.'%')
             ->paginate();
         if ($request->has('button') && $request->get('button')=='export'){

@@ -18,9 +18,9 @@ class UserController extends Controller
 
         $rules = ['captcha' => 'required|captcha'];
         $validator = Validator::make($request->all(), $rules);
-//        if ($validator->fails()) {
-//            return view('ErrorAlert', ['err_info' => '验证码错误！']);
-//        }
+        if ($validator->fails()) {
+            return view('ErrorAlert', ['err_info' => '验证码错误！']);
+        }
 
         $username=$request->input('UserName');
         $password=$request->input('PassWord');
@@ -31,7 +31,7 @@ class UserController extends Controller
         $user = Sentinel::authenticate($credentials);
         if ($user){//todo:用户验证
 //            Sentinel::login($user);
-            return redirect('Agent');
+            return redirect('/');
         }else{
             return view('ErrorAlert', ['err_info' => '用户名或密码错误！']);
         }
@@ -98,7 +98,7 @@ class UserController extends Controller
     }
 
     public function Select(Request $request){
-        $users=User::where('email','like',$request->input('username'))->paginate();
+        $users=User::where('email','like','%'.trim($request->input('username')).'%')->paginate();
         return view('User.Index',['users'=>$users]);
     }
 

@@ -50,6 +50,7 @@ Route::group(['middleware' => ['User','Permission']], function () {
     Route::get('ChannelAdd','ChannelController@AddView');
     Route::post('ChannelAdd','ChannelController@Add');
     Route::get('Channel','ChannelController@Index');
+    Route::post('Channel','ChannelController@Select');
     Route::get('ChannelEdit/{id}','ChannelController@Edit');
     Route::post('ChannelEdit/{id}','ChannelController@Update');
 

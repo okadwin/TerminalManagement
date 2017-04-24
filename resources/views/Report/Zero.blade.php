@@ -14,16 +14,16 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">终端号</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="TerminalNumber">
+                            <input type="text" class="form-control" name="TerminalNumber" value="{{request()->input('TerminalNumber')}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">出库日期</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control datetimepicker" name="start">
+                            <input type="text" class="form-control datetimepicker" name="start" value="{{request()->input('start')}}">
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control datetimepicker" name="stop">
+                            <input type="text" class="form-control datetimepicker" name="stop" value="{{request()->input('stop')}}">
                         </div>
                     </div>
                     <div class="form-group">

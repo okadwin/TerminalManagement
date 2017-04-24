@@ -5,7 +5,7 @@
 @section('main')
 <div class="main">
     <div class="location">
-        <span class="text"><i class="iconFont">&#xe635;</i><a href="/">首页</a>&nbsp;&nbsp;>&nbsp;&nbsp;<a href="{{action('ChannelController@Index')}}">渠道配置</a> - 新增</span>
+        <span class="text"><i class="iconFont">&#xe635;</i><a href="/">首页</a>&nbsp;&nbsp;>&nbsp;&nbsp;<a href="{{action('ChannelController@Index')}}">渠道配置</a></span>
     </div>
     <div class="content">
         <div class="formBox">

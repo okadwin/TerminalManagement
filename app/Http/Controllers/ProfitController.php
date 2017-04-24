@@ -76,6 +76,7 @@ class ProfitController extends Controller
         $perPage = 15;
         $paginate = new LengthAwarePaginator($r,$r->count(),$perPage);
         $paginate->setPath(Paginator::resolveCurrentPath());
+        $paginate->appends($request->all());
         $page = empty($request->get('page'))? 1 : $request->get('page');
         $r = $r->sortByDesc('id')->forPage($page,$perPage);
         return view('Profit.Ylz',['r'=>$r,'profit'=>@$num,'paginate'=>$paginate]);
@@ -86,7 +87,7 @@ class ProfitController extends Controller
 
     public function Agent(Request $request){
         if ($request->input('agent')){
-            $agents=Agent::where('AgentName','like','%'.$request->input('agent').'%')->get();
+            $agents=Agent::where('AgentName','like','%'.trim($request->input('agent')) .'%')->get();
         }else{
             $agents=Agent::all();
         }
@@ -168,6 +169,7 @@ class ProfitController extends Controller
         $perPage = 15;
         $paginate = new LengthAwarePaginator($profits,$profits->count(),$perPage);
         $paginate->setPath(Paginator::resolveCurrentPath());
+        $paginate->appends($request->all());
         $page = empty($request->get('page'))? 1 : $request->get('page');
         $profits = $profits->sortByDesc('id')->forPage($page,$perPage);
         return view('Profit.Agent',['profits'=>$profits,'paginate'=>$paginate]);

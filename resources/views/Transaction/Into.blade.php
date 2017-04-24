@@ -17,7 +17,7 @@
                             <select class="form-control" name="ChannelSearch">
                                 <option value="">全部</option>
                                 @foreach($channels as $channel)
-                                    <option value="{{$channel->id}}">{{$channel->Name}}</option>
+                                    <option value="{{$channel->id}}" @if(!empty(request()->input('ChannelSearch'))) @if(request()->input('ChannelSearch')==$channel->id) selected="selected" @endif @endif>{{$channel->Name}}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -16,13 +16,13 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">商户编号</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="ShopNumber">
+                            <input type="text" class="form-control" name="ShopNumber" value="{{request()->input('ShopNumber')}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">商户名称</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="ShopName">
+                            <input type="text" class="form-control" name="ShopName" value="{{request()->input('ShopName')}}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -31,7 +31,7 @@
                             <select class="form-control" name="Agent">
                                 <option value="">请选择代理商</option>
                                 @foreach($agents as $agent)
-                                    <option value="{{$agent->id}}">{{$agent->AgentName}}</option>
+                                    <option value="{{$agent->id}}" @if(!empty(request()->input('Agent'))) @if(request()->input('Agent')==$agent->id) selected="selected" @endif @endif>{{$agent->AgentName}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -39,16 +39,16 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">交易日期</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control datetimepicker" name="TimeStart">
+                            <input type="text" class="form-control datetimepicker" name="TimeStart" value="{{request()->input('TimeStart')}}">
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control datetimepicker" name="TimeStop">
+                            <input type="text" class="form-control datetimepicker" name="TimeStop" value="{{request()->input('TimeStop')}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">终端号</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="TerminalNumber">
+                            <input type="text" class="form-control" name="TerminalNumber" value="{{request()->input('TerminalNumber')}}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -92,7 +92,7 @@
                             <td>{{date('H:i:s',$transaction->TransactionTime)}}</td>
                             <td>{{$transaction->TransactionName}}</td>
                             <td>{{$transaction->SettleName}}</td>
-                            <td>{{$transaction->Fee * ((100 - @$transaction->Shop->Agent->Profit) / 100)}}</td>
+                            <td>{{$transaction->Fee * 0.75 * ((100 - @$transaction->Shop->Agent->Profit) / 100)}}</td>
                         </tr>
                         @endforeach
                     </table>

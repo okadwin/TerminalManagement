@@ -32,7 +32,7 @@
                             <select class="form-control" id="manufacturers" name="Manufacture">
                                 <option value="">全部</option>
                                 @foreach($types as $type)
-                                    <option value="{{$type->Manufacture}}">{{$type->Manufacture}}</option>
+                                    <option value="{{$type->Manufacture}}" @if(!empty(request()->input('Manufacture'))) @if(request()->input('Manufacture')==$type->Manufacture) selected="selected" @endif @endif>{{$type->Manufacture}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -42,13 +42,16 @@
                         <div class="col-sm-10">
                             <select class="form-control" id="equipment" name="Type">
                                 <option value="">全部</option>
+                                @foreach($types as $type)
+                                    @if(!empty(request()->input('Type'))) @if(request()->input('Type')==$type->id)<option value="{{$type->id}}" selected="selected">{{$type->Type}}</option>@endif @endif
+                                @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">终端S/N码</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="SN">
+                            <input type="text" class="form-control" name="SN" value="{{request()->input('SN')}}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -56,8 +59,8 @@
                         <div class="col-sm-10">
                             <select class="form-control" name="Status">
                                 <option value="">全部</option>
-                                <option value="1">已入库</option>
-                                <option value="2">已出库</option>
+                                <option value="1" @if(!empty(request()->input('Status'))) @if(request()->input('Status')==1) selected="selected" @endif @endif>已入库</option>
+                                <option value="2" @if(!empty(request()->input('Status'))) @if(request()->input('Status')==2) selected="selected" @endif @endif>已出库</option>
                             </select>
                         </div>
                     </div>
@@ -80,6 +83,7 @@
                             <th>终端状态</th>
                             <th>库存地点</th>
                         </tr>
+                        @if($terminals)
                         @foreach($terminals as $terminal)
                         <tr>
                             <td>{{$terminal->TerminalType->Manufacture}}</td>
@@ -89,6 +93,7 @@
                             <td>{{$terminal->Location}}</td>
                         </tr>
                         @endforeach
+                        @endif
                     </table>
                 </div>
 

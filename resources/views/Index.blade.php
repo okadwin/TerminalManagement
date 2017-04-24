@@ -36,13 +36,13 @@
                     allowDecimals: true,
                     labels: {
                         formatter: function() {
-                            return this.value + '（人）';
+                            return this.value + '（个）';
                         }
                     },
                 },
                 series: [{
                     pointInterval: 24 * 3600 * 1000,
-                    pointStart: Date.UTC(2016, 0, 26),
+                    pointStart: Date.UTC({{$day['y']}}, {{$day['m']}}, {{$day['d']+1}}),
                     data: {{json_encode($shops)}},
                     showInLegend: false,
                 }],
@@ -109,13 +109,13 @@
                     allowDecimals: true,
                     labels: {
                         formatter: function() {
-                            return this.value + '（人）';
+                            return this.value + '（个）';
                         }
                     },
                 },
                 series: [{
                     pointInterval: 24 * 3600 * 1000,
-                    pointStart: Date.UTC(2016, 0, 26),
+                    pointStart: Date.UTC({{$day['y']}}, {{$day['m']}}, {{$day['d']+1}}),
                     data: {{json_encode($shopd)}},
                     showInLegend: false,
                 }],
@@ -187,7 +187,7 @@
                 },
                 series: [{
                     pointInterval: 24 * 3600 * 1000,
-                    pointStart: Date.UTC(2016, 0, 26),
+                    pointStart: Date.UTC({{$day['y']}}, {{$day['m']}}, {{$day['d']+1}}),
                     data: {{json_encode($numbers)}},
                     showInLegend: false,
                 }],
@@ -258,7 +258,7 @@
                 },
                 series: [{
                     pointInterval: 24 * 3600 * 1000,
-                    pointStart: Date.UTC(2016, 0, 26),
+                    pointStart: Date.UTC({{$day['y']}}, {{$day['m']}}, {{$day['d']+1}}),
                     data: {{json_encode($numberd)}},
                     showInLegend: false,
                 }],
@@ -329,7 +329,7 @@
                 },
                 series: [{
                     pointInterval: 24 * 3600 * 1000,
-                    pointStart: Date.UTC(2016, 0, 26),
+                    pointStart: Date.UTC({{$day['y']}}, {{$day['m']}}, {{$day['d']+1}}),
                     data: {{json_encode($amounts)}},
                     showInLegend: false,
                 }],
@@ -401,7 +401,7 @@
                 },
                 series: [{
                     pointInterval: 24 * 3600 * 1000,
-                    pointStart: Date.UTC(2016, 0, 26),
+                    pointStart: Date.UTC({{$day['y']}}, {{$day['m']}}, {{$day['d']+1}}),
                     data: {{json_encode($amountd)}},
                     showInLegend: false,
                 }],

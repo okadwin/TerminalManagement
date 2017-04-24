@@ -43,7 +43,8 @@ class ChannelController extends Controller
     }
 
     public function Select(Request $request){
-        $Name=$request->input('Name');
+        $where=array();
+        $Name=trim($request->input('Name'));
         if ($Name){$where[]=array('Name',$Name);}
         if (!$where){return view('ErrorAlert', ['err_info' => '请输入查询条件！']);}
         $channels=Channel::where($where)->paginate();

@@ -33,19 +33,18 @@ class ShopController extends Controller
     }
 
     public function ShopSelect(Request $request){
-        $ShopNumber=$request->input('ShopNumber');
-        $ShopName=$request->input('ShopName');
+        $ShopNumber=trim($request->input('ShopNumber'));
+        $ShopName=trim($request->input('ShopName'));
         $ShopAgent=$request->input('ShopAgent');
         $ShopTimeStart=$request->input('ShopTimeStart');
         $ShopTimeStop=$request->input('ShopTimeStop');
         $ShopStatus=$request->input('ShopStatus');
-//todo:翻页方式是GET，翻页后可能无法带有查询条件，可以改成GET传递查询条件即可
         $where=array();
         if ($ShopNumber){$where[] = array('ShopNumber','=',$ShopNumber);}
         if ($ShopName){$where[] = array('ShopName','like','%'.$ShopName.'%');}
         if ($ShopAgent){$where[] = array('ShopAgent','=',$ShopAgent);}
         if ($ShopTimeStart){$ShopTimeStart=strtotime($ShopTimeStart);$where[] = array('ShopJoinTime','>',$ShopTimeStart);}
-        if ($ShopTimeStop){$ShopTimeStop=strtotime($ShopTimeStop);$where[] = array('ShopJoinTime','<',$ShopTimeStop);}
+        if ($ShopTimeStop){$ShopTimeStop=strtotime($ShopTimeStop);$where[] = array('ShopJoinTime','<',$ShopTimeStop + 86400);}
         if ($ShopStatus/*||$ShopStatus===0*/!==''){$where[] = array('ShopStatus','=',$ShopStatus);}
 //        if (@!$where){
 ////            return view('ErrorAlert', ['err_info' => '请输入查询条件！']);

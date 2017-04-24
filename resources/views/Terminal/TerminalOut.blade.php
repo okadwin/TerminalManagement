@@ -26,7 +26,7 @@
                             <select class="form-control" name="Manufacture" id="manufacturers">
                                 <option value="">全部</option>
                                 @foreach($types as $type)
-                                    <option value="{{$type->Manufacture}}">{{$type->Manufacture}}</option>
+                                    <option value="{{$type->Manufacture}}" @if(!empty(request()->input('Manufacture'))) @if(request()->input('Manufacture')==$type->Manufacture) selected="selected" @endif @endif>{{$type->Manufacture}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -36,22 +36,25 @@
                         <div class="col-sm-10">
                             <select class="form-control" name="Type" id="equipment">
                                 <option>全部</option>
+                                @foreach($types as $type)
+                                    @if(!empty(request()->input('Type'))) @if(request()->input('Type')==$type->id)<option value="{{$type->id}}" selected="selected">{{$type->Type}}</option>@endif @endif
+                                @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">终端S/N码</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="SN" id="snCode">
+                            <input type="text" class="form-control" name="SN" id="snCode" value="{{request()->input('SN')}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">出库时间</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control datetimepicker" name="OutStartTime">
+                            <input type="text" class="form-control datetimepicker" name="OutStartTime" value="{{request()->input('OutStartTime')}}">
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control datetimepicker" name="OutStopTime">
+                            <input type="text" class="form-control datetimepicker" name="OutStopTime" value="{{request()->input('OutStopTime')}}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -126,9 +129,17 @@
                             <span class="alert-link">2、如S/N码查询结果为已出库，不能进行出库操作</span>
                             <br />
                             <span class="alert-link">3、如S/N码查询结果为不存在，不能进行出库操作</span>
+                            <br />
+                            <br>
+                            <span class="alert-link">****************************注意****************************</span>
+                            <br />
+                            <span class="alert-link">终端S/N码和终端号码务必反复确认，一经出库，禁止修改！！！</span>
+                            <br>
+                            <span class="alert-link">************************************************************</span>
+                            <br />
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">终端S/N码</label>
+                            <label class="col-sm-3 control-label" style="color: darkred">终端S/N码</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="SN">
                             </div>
@@ -140,7 +151,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">终端号</label>
+                            <label class="col-sm-3 control-label" style="color: darkred">终端号 </label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="TerminalNumber">
                             </div>

@@ -14,13 +14,13 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">商户编号</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="ShopNumber">
+                        <input type="text" class="form-control" name="ShopNumber" value="{{request()->input('ShopNumber')}}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">商户名称</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="ShopName">
+                        <input type="text" class="form-control" name="ShopName" value="{{request()->input('ShopName')}}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -29,7 +29,7 @@
                         <select class="form-control" name="ShopAgent">
                             <option value="">请选择代理商</option>
                             @foreach($agents as $agent)
-                                <option value="{{$agent->id}}">{{$agent->AgentName}}</option>
+                                <option value="{{$agent->id}}" @if(!empty(request()->input('ShopAgent'))) @if(request()->input('ShopAgent')==$agent->id) selected="selected" @endif @endif>{{$agent->AgentName}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -37,10 +37,10 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">入网时间</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control datetimepicker" name="ShopTimeStart">
+                        <input type="text" class="form-control datetimepicker" name="ShopTimeStart" value="{{request()->input('ShopTimeStart')}}">
                     </div>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control datetimepicker" name="ShopTimeStop">
+                        <input type="text" class="form-control datetimepicker" name="ShopTimeStop" value="{{request()->input('ShopTimeStop')}}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -48,9 +48,9 @@
                     <div class="col-sm-10">
                         <select class="form-control" name="ShopStatus">
                             <option value="">全部</option>
-                            <option value="1">已上线</option>
-                            <option value="2">已禁用</option>
-                            <option value="0">已注销</option>
+                            <option value="1" @if(!empty(request()->input('ShopStatus'))) @if(request()->input('ShopStatus')==1) selected="selected" @endif @endif>已上线</option>
+                            <option value="2" @if(!empty(request()->input('ShopStatus'))) @if(request()->input('ShopStatus')==2) selected="selected" @endif @endif>已禁用</option>
+                            <option value="0" @if(!empty(request()->input('ShopStatus'))) @if(request()->input('ShopStatus')===0) selected="selected" @endif @endif>已注销</option>
                         </select>
                     </div>
                 </div>

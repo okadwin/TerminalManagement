@@ -48,8 +48,8 @@ class TerminalController extends Controller
 
     public function TypeSelect(Request $request){
         $where=array();
-        $Manufacture=$request->input('Manufacture');
-        $type=$request->input('Type');
+        $Manufacture=trim($request->input('Manufacture'));
+        $type=trim($request->input('Type'));
         if ($Manufacture){$where[]=array('Manufacture','like','%'.$Manufacture.'%');}
         if ($type){$where[]=array('Type',$type);}
         //if (@!$where){return view('ErrorAlert', ['err_info' => '请输入查询条件！']);}
@@ -84,7 +84,7 @@ class TerminalController extends Controller
         $user=Sentinel::getUser();
         if (!$request->input('type') || !$request->input('SN') || !$request->input('location')){return response()->json(['msg'=>'终端型号、SN码、库存地点必须填写！']);}
         $s=Terminal::where('SN',$request->input('SN'))->first();
-        if ($s){return view('ErrorAlert', ['err_info' => '该SN码设备已经入库！检查SN码是否正确！']);}
+        if ($s){return response()->json(['msg'=>'该SN码设备已经入库！请检查SN码是否正确']);;}
         $terminal->Type=$request->input('type');
         $terminal->SN=$request->input('SN');
         $terminal->Location=$request->input('location');
@@ -104,15 +104,15 @@ class TerminalController extends Controller
         $types=TerminalType::all();
         $Manufacture=$request->input('Manufacture');
         $type=$request->input('type');
-        $sn=$request->input('sn');
-        $location=$request->input('location');
+        $sn=trim($request->input('sn'));
+        $location=trim($request->input('location'));
         $StartTime=$request->input('InTimeStart');
         $StopTime=$request->input('InTimeStop');
         if ($type){$where[] = array('Type','=',$type);}
         if ($sn){$where[] = array('SN','=',$sn);}
         if ($location){$where[] = array('Location','=',$location);}
         if ($StartTime){$where[] = array('InTime','>',strtotime($StartTime));}
-        if ($StopTime){$where[] = array('InTime','<',strtotime($StopTime));}
+        if ($StopTime){$where[] = array('InTime','<',strtotime($StopTime) + 86400);}
 //        if (@!$where && !$Manufacture){
 //            return view('ErrorAlert', ['err_info' => '请至少输入一个查询条件！']);
 //        }
@@ -231,13 +231,13 @@ class TerminalController extends Controller
         $channels=Channel::all();
         $Manufacture=$request->input('Manufacture');
         $type=$request->input('type');
-        $sn=$request->input('SN');
+        $sn=trim($request->input('SN'));
         $StartTime=$request->input('OutStartTime');
         $StopTime=$request->input('OutStopTime');
         if ($type){$where[] = array('Type','=',$type);}
         if ($sn){$where[] = array('SN','=',$sn);}
         if ($StartTime){$where[] = array('OutTime','>',strtotime($StartTime));}
-        if ($StopTime){$where[] = array('OutTime','<',strtotime($StopTime));}
+        if ($StopTime){$where[] = array('OutTime','<',strtotime($StopTime) + 86400);}
 //        if (@!$where && !$Manufacture){
 //            return view('ErrorAlert', ['err_info' => '请至少输入一个查询条件！']);
 //        }
@@ -320,7 +320,7 @@ class TerminalController extends Controller
         $channels=Channel::all();
         $Manufacture=$request->input('Manufacture');
         $type=$request->input('Type');
-        $sn=$request->input('SN');
+        $sn=trim($request->input('SN'));
         if ($type){$where[] = array('Type','=',$type);}
         if ($sn){$where[] = array('SN','=',$sn);}
         if ($request->input('Status')){

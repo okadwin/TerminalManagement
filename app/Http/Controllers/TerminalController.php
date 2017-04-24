@@ -273,6 +273,7 @@ class TerminalController extends Controller
                 DB::raw('COUNT(*) as value')
             ]);
 
+
         $types=TerminalType::all();
         $channels=Channel::all();
         $terminals=Terminal::where('OutTime','!=',null)->get();

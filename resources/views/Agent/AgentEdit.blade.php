@@ -9,19 +9,19 @@
         </div>
         <div class="content">
             <div class="formBox">
-                <form class="form-horizontal" action="{{action('AgentController@AgentEdit',['id'=>$agent->id])}}" method="post">
+                <form class="form-horizontal" action="{{action('AgentController@AgentEdit',['id'=>$agent->id])}}" method="post" id="commentForm">
                     {{ csrf_field() }}
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <div class="col-md-12 col-lg-6 form-group">
                             <label class="col-md-2 col-lg-4 control-label">代理商名称</label>
                             <div class="col-md-10 col-lg-8">
-                                <input type="text" class="form-control" name="AgentName"  value="{{$agent->AgentName}}">
+                                <input type="text" class="form-control" name="AgentName"  value="{{$agent->AgentName}}" required>
                             </div>
                         </div>
                         <div class="col-md-12 col-lg-6 form-group">
                             <label class="col-md-2 col-lg-4 control-label">法人</label>
                             <div class="col-md-10 col-lg-8">
-                                <input type="text" class="form-control" name="Person" value="{{$agent->Person}}">
+                                <input type="text" class="form-control" name="Person" value="{{$agent->Person}}" required>
                             </div>
                         </div>
                     </div>
@@ -30,13 +30,13 @@
                         <div class="col-md-12 col-lg-6 form-group">
                             <label class="col-md-2 col-lg-4 control-label">联系人</label>
                             <div class="col-md-10 col-lg-8">
-                                <input type="text" class="form-control" name="cPerson" value="{{$agent->cPerson}}">
+                                <input type="text" class="form-control" name="cPerson" value="{{$agent->cPerson}}" required>
                             </div>
                         </div>
                         <div class="col-md-12 col-lg-6 form-group">
                             <label class="col-md-2 col-lg-4 control-label">身份证号</label>
                             <div class="col-md-10 col-lg-8">
-                                <input type="text" class="form-control" name="IDcard" value="{{$agent->IDcard}}">
+                                <input type="text" class="form-control" name="IDcard" value="{{$agent->IDcard}}" required>
                             </div>
                         </div>
                     </div>
@@ -45,13 +45,13 @@
                         <div class="col-md-12 col-lg-6 form-group">
                             <label class="col-md-2 col-lg-4 control-label">联系电话</label>
                             <div class="col-md-10 col-lg-8">
-                                <input type="text" class="form-control" name="cPhone" value="{{$agent->cPhone}}">
+                                <input type="text" class="form-control" name="cPhone" value="{{$agent->cPhone}}" required>
                             </div>
                         </div>
                         <div class="col-md-12 col-lg-6 form-group">
                             <label class="col-md-2 col-lg-4 control-label">银行账户</label>
                             <div class="col-md-10 col-lg-8">
-                                <input type="text" class="form-control" name="BankAccountNum" value="{{$agent->BankAccountNum}}">
+                                <input type="text" class="form-control" name="BankAccountNum" value="{{$agent->BankAccountNum}}" required>
                             </div>
                         </div>
                     </div>
@@ -60,26 +60,26 @@
                         <div class="col-md-12 col-lg-6 form-group">
                             <label class="col-md-2 col-lg-4 control-label">开户名</label>
                             <div class="col-md-10 col-lg-8">
-                                <input type="text" class="form-control" name="BankAccountName" value="{{$agent->BankAccountName}}">
+                                <input type="text" class="form-control" name="BankAccountName" value="{{$agent->BankAccountName}}" required>
                             </div>
                         </div>
                         <div class="col-md-12 col-lg-6 form-group">
                             <label class="col-md-2 col-lg-4 control-label">开户行</label>
                             <div class="col-md-10 col-lg-8">
-                                <input type="text" class="form-control" name="BankName" value="{{$agent->BankName}}">
+                                <input type="text" class="form-control" name="BankName" value="{{$agent->BankName}}" required>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">联行号</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="BankNum" value="{{$agent->BankNum}}">
+                            <input type="text" class="form-control" name="BankNum" value="{{$agent->BankNum}}" required>
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">分润率(%)</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="Profit" value="{{$agent->Profit}}">
+                            <input type="text" class="form-control" name="Profit" value="{{$agent->Profit}}" required>
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-12 col-lg-12">
@@ -94,4 +94,11 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        $().ready(function() {
+            $("#commentForm").validate();
+        });
+    </script>
 @endsection

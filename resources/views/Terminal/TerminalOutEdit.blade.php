@@ -11,7 +11,7 @@
         </div>
         <div class="content">
             <div class="formBox">
-                <form class="form-horizontal" action="{{action('TerminalController@TerminalOutUpdate',['id'=>$terminal->id])}}" method="post">
+                <form class="form-horizontal" action="{{action('TerminalController@TerminalOutUpdate',['id'=>$terminal->id])}}" method="post" id="commentForm">
                     {{ csrf_field() }}
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <div class="col-md-12 col-lg-6 form-group">
@@ -23,7 +23,7 @@
                         <div class="col-md-12 col-lg-6 form-group">
                             <label class="col-md-2 col-lg-4 control-label">商户号</label>
                             <div class="col-md-10 col-lg-8">
-                                <input type="text" class="form-control" name="ShopNumber" value="{{$terminal->ShopNumber}}">
+                                <input type="text" class="form-control" name="ShopNumber" value="{{$terminal->ShopNumber}}" required>
                             </div>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                         <div class="col-md-12 col-lg-6 form-group">
                             <label class="col-md-2 col-lg-4 control-label">渠道</label>
                             <div class="col-md-10 col-lg-8">
-                                <select class="form-control" name="Channel" id="equipment">
+                                <select class="form-control" name="Channel" id="equipment" required>
                                     {{--<option>请选择厂商</option>--}}
                                     @foreach($channels as $channel)
                                         <option value="{{$channel->id}}" @if($channel->id == $terminal->Channel) selected="selected" @endif>{{$channel->Name}}</option>
@@ -52,7 +52,7 @@
                         <div class="col-md-12 col-lg-6 form-group">
                             <label class="col-md-2 col-lg-4 control-label">出库类型</label>
                             <div class="col-md-10 col-lg-8">
-                                <select class="form-control" name="OutType" id="equipment">
+                                <select class="form-control" name="OutType" id="equipment" required>
                                     {{--<option>请选择厂商</option>--}}
                                     <option value="1" @if($terminal->OutType == 1) selected="selected" @endif>免投</option>
                                     <option value="2" @if($terminal->OutType == 2) selected="selected" @endif>自购</option>
@@ -104,6 +104,10 @@
             })
         })
     </script>
-
+    <script>
+        $().ready(function() {
+            $("#commentForm").validate();
+        });
+    </script>
 
 @endsection

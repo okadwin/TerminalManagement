@@ -11,7 +11,7 @@
         </div>
         <div class="content">
             <div class="formBox">
-                <form class="form-horizontal" action="{{action('TerminalController@TerminalInUpdate',['id'=>$terminal->id])}}" method="post">
+                <form class="form-horizontal" action="{{action('TerminalController@TerminalInUpdate',['id'=>$terminal->id])}}" method="post" id="commentForm">
                     {{ csrf_field() }}
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <div class="col-md-12 col-lg-6 form-group">
@@ -23,7 +23,7 @@
                         <div class="col-md-12 col-lg-6 form-group">
                             <label class="col-md-2 col-lg-4 control-label">库存地点</label>
                             <div class="col-md-10 col-lg-8">
-                                <input type="text" class="form-control" name="location" value="{{$terminal->Location}}">
+                                <input type="text" class="form-control" name="location" value="{{$terminal->Location}}" required>
                             </div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                         <div class="col-md-12 col-lg-6 form-group">
                             <label class="col-md-2 col-lg-4 control-label">终端厂商</label>
                             <div class="col-md-10 col-lg-8">
-                                <select class="form-control" name="manufacture" id="manufacturers">
+                                <select class="form-control" name="manufacture" id="manufacturers" required>
                                     {{--<option>请选择厂商</option>--}}
                                     @foreach($types as $type)
                                         <option value="{{$type->Manufacture}}"  @if($type->id == $terminal->Type) selected="selected" @endif>{{$type->Manufacture}}</option>
@@ -42,7 +42,7 @@
                         <div class="col-md-12 col-lg-6 form-group">
                             <label class="col-md-2 col-lg-4 control-label">终端型号</label>
                             <div class="col-md-10 col-lg-8">
-                                <select class="form-control" name="type" id="equipment">
+                                <select class="form-control" name="type" id="equipment" required>
                                     {{--<option>请选择厂商</option>--}}
                                     @foreach($types as $type)
                                         <option value="{{$type->id}}" @if($type->id == $terminal->Type) selected="selected" @endif>{{$type->Type}}</option>
@@ -99,4 +99,9 @@
     </script>
 
 
+    <script>
+        $().ready(function() {
+            $("#commentForm").validate();
+        });
+    </script>
 @endsection

@@ -11,14 +11,14 @@
     </div>
     <div class="content">
         <div class="formBox">
-            <form class="form-horizontal" action="{{action('ShopController@ShopAdd')}}" method="post">
+            <form class="form-horizontal" action="{{action('ShopController@ShopAdd')}}" method="post" id="commentForm">
                 {{ csrf_field() }}
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">所属代理商</label>
                         <div class="col-md-10 col-lg-8">
-                            <select class="form-control" name="ShopAgent">
-                                <option>请选择所属代理商</option>
+                            <select class="form-control" name="ShopAgent" required>
+                                <option value="">请选择所属代理商</option>
                                 @foreach($agents as $agent)
                                     <option value="{{$agent->id}}">{{$agent->AgentName}}</option>
                                 @endforeach
@@ -28,7 +28,7 @@
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">商户编号</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="ShopNumber">
+                            <input type="text" class="form-control" name="ShopNumber" required>
                         </div>
                     </div>
                 </div>
@@ -37,13 +37,13 @@
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">商户名称</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="ShopName">
+                            <input type="text" class="form-control" name="ShopName" required>
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">联系人</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="ShopContact">
+                            <input type="text" class="form-control" name="ShopContact" required>
                         </div>
                     </div>
                 </div>
@@ -52,13 +52,13 @@
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">联系电话</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="ShopContactPhone">
+                            <input type="text" class="form-control" name="ShopContactPhone" required>
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">身份证号</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="ShopContactID">
+                            <input type="text" class="form-control" name="ShopContactID" required>
                         </div>
                     </div>
                 </div>
@@ -75,4 +75,11 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $().ready(function() {
+        $("#commentForm").validate();
+    });
+</script>
 @endsection

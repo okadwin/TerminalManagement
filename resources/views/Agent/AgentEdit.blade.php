@@ -45,7 +45,7 @@
                         <div class="col-md-12 col-lg-6 form-group">
                             <label class="col-md-2 col-lg-4 control-label">联系电话</label>
                             <div class="col-md-10 col-lg-8">
-                                <input type="text" class="form-control" name="cPhone" value="{{$agent->cPhone}}" required>
+                                <input type="text" class="form-control" name="cPhone" value="{{$agent->cPhone}}" required digits="true">
                             </div>
                         </div>
                         <div class="col-md-12 col-lg-6 form-group">
@@ -79,7 +79,7 @@
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">分润率(%)</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="Profit" value="{{$agent->Profit}}" required>
+                            <input type="text" class="form-control" name="Profit" value="{{$agent->Profit}}" required number="true">
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-12 col-lg-12">

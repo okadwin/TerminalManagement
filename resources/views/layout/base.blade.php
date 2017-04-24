@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{elixir('go/css/style.css')}}"/>
     <script src="{{elixir('go/js/jquery-2.1.1.min.js')}}"></script>
     <script src="{{elixir('go/js/bootstrap.min.js')}}"></script>
+    <script src="{{elixir('go/js/jquery.validate.min.js')}}"></script>
+    <script src="{{elixir('go/js/messages_zh.js')}}"></script>
 </head>
 <body>
 <?php
@@ -83,8 +85,6 @@ function toa($action){
     </div>
     @yield('main')
 </div>
-
-
 <script src="{{elixir('go/js/jquery.datetimepicker.js')}}"></script>
 <script src="{{elixir('go/js/leftNav.js')}}"></script>
 <script src="{{elixir('go/js/time.js')}}"></script>

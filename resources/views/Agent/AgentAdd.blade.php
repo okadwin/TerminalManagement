@@ -105,6 +105,7 @@
 
 <script src="{{elixir('go/js/jquery.validate.min.js')}}"></script>
 <script src="{{elixir('go/js/jquery.messages_zh.js')}}"></script>
+
 <script>
     $().ready(function() {
         $("#commentForm").validate();

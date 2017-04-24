@@ -28,15 +28,15 @@ Route::group(['middleware' => ['User','Permission']], function () {
     Route::post('ShopAdd', 'ShopController@ShopAdd');
 
     Route::get('TerminalTypeAPI/{Manufacture}','TerminalController@API');
-    Route::get('TerminalType','TerminalController@Type');
+    Route::any('TerminalType','TerminalController@Type');
     Route::get('TerminalTypeAdd','TerminalController@TypeAddView');
     Route::post('TerminalTypeAdd','TerminalController@TypeAdd');
     Route::get('TerminalTypeEdit/{id}','TerminalController@TypeEdit');
     Route::post('TerminalTypeEdit/{id}','TerminalController@TypeUpdate');
-    Route::post('TerminalTypeSelect','TerminalController@TypeSelect');
-    Route::get('TerminalIn','TerminalController@TerminalIn');
-    Route::post('TerminalIn','TerminalController@TerminalAdd');
-    Route::post('TerminalInSelect','TerminalController@TerminalInSelect');
+    //Route::post('TerminalType','TerminalController@TypeSelect');
+    //Route::get('TerminalIn','TerminalController@TerminalIn');
+    Route::post('TerminalInAdd','TerminalController@TerminalAdd');
+    Route::any('TerminalIn','TerminalController@TerminalIn');
     Route::get('TerminalInEdit/{id}','TerminalController@TerminalInEdit');
     Route::post('TerminalInUpdate/{id}','TerminalController@TerminalInUpdate');
     Route::get('TerminalOut','TerminalController@TerminalOut');

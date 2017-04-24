@@ -9,6 +9,8 @@ use App\Models\TerminalType;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 class TerminalController extends Controller
 {
@@ -27,9 +29,18 @@ class TerminalController extends Controller
         return view('ErrorAlert', ['err_info' => '添加成功！']);
     }
 
-    public function Type(){
-        $types=TerminalType::paginate();
+    public function Type(Request $request){
+//        $types=TerminalType::paginate();
+        $where=array();
+        $Manufacture=trim($request->input('Manufacture'));
+        $type=trim($request->input('Type'));
+        if ($Manufacture){$where[]=array('Manufacture','like','%'.$Manufacture.'%');}
+        if ($type){$where[]=array('Type',$type);}
+        //if (@!$where){return view('ErrorAlert', ['err_info' => '请输入查询条件！']);}
+        $types=TerminalType::where($where)->paginate();
+        $types->appends($request->all());
         return view('Terminal.Type',['types'=>$types]);
+        //return view('Terminal.Type',['types'=>$types]);
     }
 
     public function TypeEdit($id){
@@ -54,6 +65,7 @@ class TerminalController extends Controller
         if ($type){$where[]=array('Type',$type);}
         //if (@!$where){return view('ErrorAlert', ['err_info' => '请输入查询条件！']);}
         $types=TerminalType::where($where)->paginate();
+        $types->appends($request->all());
         return view('Terminal.Type',['types'=>$types]);
     }
 
@@ -68,15 +80,92 @@ class TerminalController extends Controller
 
 
 
-    public function TerminalIn(){
+    public function TerminalIn(Request $request){
         $number=Terminal::where('InTime','>',strtotime(date('Y-m-d', time())))
             ->get([
             DB::raw('COUNT(*) as value')
             ]);
         //print_r($number);
+//        $types=TerminalType::all();
+//        $terminals=Terminal::paginate();
+//        $number=Terminal::where('InTime','>',strtotime(date('Y-m-d', time())))
+//            ->get([
+//                DB::raw('COUNT(*) as value')
+//            ]);
+//        $wtf=0;
+        $where=array();
         $types=TerminalType::all();
-        $terminals=Terminal::paginate();
-        return view('Terminal.TerminalIn',['types'=>$types,'terminals'=>$terminals,'number'=>$number,'wtf'=>0]);
+        $Manufacture=$request->input('Manufacture');
+        $type=$request->input('type');
+        $sn=trim($request->input('sn'));
+        $location=trim($request->input('location'));
+        $StartTime=$request->input('InTimeStart');
+        $StopTime=$request->input('InTimeStop');
+        if ($type){$where[] = array('Type','=',$type);}
+        if ($sn){$where[] = array('SN','=',$sn);}
+        if ($location){$where[] = array('Location','=',$location);}
+        if ($StartTime){$where[] = array('InTime','>',strtotime($StartTime));}
+        if ($StopTime){$where[] = array('InTime','<',strtotime($StopTime) + 86400);}
+        //        if (@!$where && !$Manufacture){
+        //            return view('ErrorAlert', ['err_info' => '请至少输入一个查询条件！']);
+        //        }
+        if ($where){
+            $terminals=Terminal::where($where)->get();
+        }else{
+            $terminals=Terminal::get();
+            //print_r($where);
+        }
+        if ($Manufacture && !$type){
+            $types=TerminalType::where('Manufacture','like','%'.$Manufacture.'%')->get();
+//            print_r($types);
+            foreach ($types as $type){
+                $terminals=$terminals->filter(function ($item)use ($type){
+                    if ($item->Type == $type->id){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                });
+            }
+        }
+        if (@!$terminals){
+            return view('ErrorAlert', ['err_info' => '无查询结果！点击确定返回']);
+        }
+
+        //$terminals=collect($terminals);
+
+        if ($request->has('button') && $request->get('button')=='export'){
+            Excel::create('TerminalIn', function ($excel) use ($terminals) {
+                $excel->sheet('Agents', function ($sheet) use ($terminals){
+                    foreach ($terminals as $item) {
+                        //                        print_r($item);
+                        $array[]=[
+                            '终端厂商名称'=>$item->TerminalType->Manufacture,
+                            '终端设备型号'=>$item->TerminalType->Type,
+                            '终端SN码'=>$item->SN,
+                            '库存地点'=>$item->Location,
+                            '入库时间'=>date('Y-m-d H:i:s',$item->InTime),
+                            '入库人员'=>$item->User->UserInfo->name,
+                        ];
+                    }
+                    $sheet->fromArray($array);
+                    $sheet->setAutoSize(true);
+                    $sheet->setAutoFilter();
+                });
+            })->export('xlsx');
+        }
+
+//        print_r($terminals);exit;
+//        $terminals->appends($request->all());
+        //todo:只根据厂家名称查询时的分页问题
+        $perPage = 15;
+        $paginate = new LengthAwarePaginator($terminals,$terminals->count(),$perPage);
+        $paginate->setPath(Paginator::resolveCurrentPath());
+        $paginate->appends($request->all());
+        $page = empty($request->get('page'))? 1 : $request->get('page');
+        $terminals = $terminals->sortByDesc('id')->forPage($page,$perPage);
+        return view('Terminal.TerminalIn',['terminals'=>$terminals,'number'=>$number,'types'=>$types,'paginate'=>$paginate]);
+        //return view('Terminal.TerminalIn',['types'=>$types,'terminals'=>$terminals,'number'=>$number,'wtf'=>0]);
     }
 
     public function TerminalAdd(Request $request){

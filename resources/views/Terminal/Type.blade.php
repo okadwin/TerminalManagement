@@ -9,7 +9,7 @@
     </div>
     <div class="content">
         <div class="topBox">
-            <form class="form-horizontal col-sm-10 col-md-10 col-lg-8 search" action="{{action('TerminalController@TypeSelect')}}" method="post">
+            <form class="form-horizontal col-sm-10 col-md-10 col-lg-8 search" action="{{action('TerminalController@Type')}}" method="post">
                 {{ csrf_field() }}
                 <div class="form-group">
                     <label class="col-sm-2 control-label">终端厂商名称</label>

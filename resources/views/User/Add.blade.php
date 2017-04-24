@@ -36,7 +36,7 @@
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">联系电话</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="phone" value="{{isset($user->UserInfo->phone) ? $user->UserInfo->phone : ''}}" required>
+                            <input type="text" class="form-control" name="phone" value="{{isset($user->UserInfo->phone) ? $user->UserInfo->phone : ''}}" required digits="true">
                         </div>
                     </div>
                 </div>

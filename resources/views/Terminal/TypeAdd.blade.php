@@ -30,7 +30,7 @@
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">终端设备售价</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="Price" value="{{isset($type->Price) ? $type->Price : ''}}" required>
+                            <input type="text" class="form-control" name="Price" value="{{isset($type->Price) ? $type->Price : ''}}" required number="true">
                         </div>
                     </div>
                 </div>

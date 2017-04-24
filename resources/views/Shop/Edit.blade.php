@@ -50,7 +50,7 @@
                     <div class="col-md-12 col-lg-6 form-group">
                         <label class="col-md-2 col-lg-4 control-label">联系电话</label>
                         <div class="col-md-10 col-lg-8">
-                            <input type="text" class="form-control" name="ShopContactPhone" value="{{$shop->ShopContactPhone}}" required>
+                            <input type="text" class="form-control" name="ShopContactPhone" value="{{$shop->ShopContactPhone}}" required digits="true">
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-6 form-group">

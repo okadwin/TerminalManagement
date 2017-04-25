@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 class AgentController extends Controller {
     //
     public function AgentIndex() {
+        $a=10/0;
         $agents = Agent::paginate();
         return view('Agent.AgentIndex', ['agents' => $agents]);
     }

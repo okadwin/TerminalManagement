@@ -46,6 +46,7 @@ class UserController extends Controller
     }
 
     public function Add(Request $request){
+        if (count(User::where('email',$request->input('username'))->get())){return view('ErrorAlert', ['err_info' => '该用户名已经存在！']);}
         $credentials = [
             'email'    => $request->input('username'),
             'password' => $request->input('password'),

@@ -13,6 +13,7 @@ class Handler extends ExceptionHandler
      *
      * @var array
      */
+    private $sentryID;
     protected $dontReport = [
         \Illuminate\Auth\AuthenticationException::class,
         \Illuminate\Auth\Access\AuthorizationException::class,
@@ -30,10 +31,27 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return void
      */
-    public function report(Exception $exception)
+//    public function report(Exception $exception)
+//    {
+//        parent::report($exception);
+//    }
+    public function report(Exception $e)
     {
-        parent::report($exception);
+        if ($this->shouldReport($e)) {
+            // bind the event ID for Feedback
+            $this->sentryID = app('sentry')->captureException($e);
+        }
+        parent::report($e);
     }
+
+    // ...
+    public function render($request, Exception $e)
+    {
+        return response()->view('errors.500', [
+            'sentryID' => $this->sentryID,
+        ], 500);
+    }
+
 
     /**
      * Render an exception into an HTTP response.
@@ -42,10 +60,10 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
-    {
-        return parent::render($request, $exception);
-    }
+//    public function render($request, Exception $exception)
+//    {
+//        return parent::render($request, $exception);
+//    }
 
     /**
      * Convert an authentication exception into an unauthenticated response.

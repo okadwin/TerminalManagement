@@ -94,11 +94,22 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                         {{--<button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>--}}
-                        <button type="submit" class="btn btn-primary">提交</button>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">提交</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <!--导入 end-->
+
+
+    <div class="popupBg"></div>
+
+    <script>
+        $(function(){
+            $("#submitBtn").on("click",function(){
+                $(".popupBg").show()
+            })
+        })
+    </script>
 @endsection
